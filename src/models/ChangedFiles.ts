@@ -7,48 +7,51 @@ import {
 import { IMAGE_SIZE } from '../constants/variables';
 
 export default class ChangedFiles {
+  private root: any;
+  private rootClassName: string;
+
   constructor() {
     this.root = {};
     this.rootClassName = 'file-info';
     this.setStyle();
   }
 
-  get fileSrcs() {
-    const fileSrcTags = Array.from(
+  private get fileSrcs() {
+    const fileSrcTags: any = Array.from(
       document.querySelectorAll(`.${this.rootClassName} .link-gray-dark`)
     );
 
     return fileSrcTags?.map(({ innerText }) => innerText) ?? [];
   }
 
-  setStyle() {
+  private setStyle() {
     const style = document.createElement('style');
     style.type = 'text/css';
 
     const css = `
-      #pr-tree-viewer-root {
+      #pr-tree-viewer {
         margin-left: 100px;
         font-size: 14px;
       }
 
-      #pr-tree-viewer-root ul {
+      #pr-tree-viewer ul {
         padding-left: 20px;
       }
 
-      #pr-tree-viewer-root li {
+      #pr-tree-viewer li {
         list-style: none;
       }
 
-      #pr-tree-viewer-root img, #pr-tree-viewer-root span {
+      #pr-tree-viewer img, #pr-tree-viewer span {
         vertical-align: middle;
         margin-left: 5px;
       }
 
-      #pr-tree-viewer-root img {
+      #pr-tree-viewer img {
         width: ${IMAGE_SIZE}px;
       }
 
-      #pr-tree-viewer-root span:hover {
+      #pr-tree-viewer span:hover {
         cursor: pointer;
         text-decoration: underline;
       }
@@ -61,8 +64,8 @@ export default class ChangedFiles {
     document.head.appendChild(style);
   }
 
-  toggle(id) {
-    const clickedElement = document.getElementById(id);
+  private toggle(id) {
+    const clickedElement = document.getElementById(id) as any;
 
     if (clickedElement.parentElement.classList.contains('opened')) {
       clickedElement.parentElement.classList.remove('opened');
@@ -79,7 +82,7 @@ export default class ChangedFiles {
     }
   }
 
-  createNestedLayer(arr, idx, next) {
+  private createNestedLayer(arr, idx, next) {
     const currVal = arr[idx];
 
     if (!currVal) {
@@ -93,7 +96,7 @@ export default class ChangedFiles {
     this.createNestedLayer(arr, idx + 1, next[currVal]);
   }
 
-  createVirtualDOM(target) {
+  private createVirtualDOM(target) {
     const targetKeys = Object.keys(target);
 
     if (!targetKeys.length) {
@@ -112,25 +115,7 @@ export default class ChangedFiles {
     }));
   }
 
-  setElementAttributes(element, props) {
-    const {
-      id,
-      name
-    } = props;
-
-    const span = document.createElement('span');
-    span.innerText = name;
-
-    element.setAttribute('id', id);
-    element.addEventListener('click', e => {
-      e.stopPropagation();
-      this.toggle(id);
-    });
-
-    element.appendChild(span);
-  }
-
-  createElement(node) {
+  private createElement(node) {
     const element = document.createElement(node.type);
     const {
       id,
@@ -168,19 +153,7 @@ export default class ChangedFiles {
     return element;
   }
 
-  appendElementsToRoot(elements) {
-    const rootElement = document.createElement('div');
-    rootElement.setAttribute('id', 'pr-tree-viewer-root');
-
-    const ul = document.createElement('ul');
-    ul.append(...elements);
-
-    rootElement.appendChild(ul);
-
-    return rootElement;
-  }
-
-  render() {
+  public render() {
     this.fileSrcs.forEach(src => {
       const splitedSrc = src.split('/');
       this.createNestedLayer(splitedSrc, 0, this.root);
@@ -195,7 +168,7 @@ export default class ChangedFiles {
     });
 
     const rootElement = document.createElement('ul');
-    rootElement.setAttribute('id', 'pr-tree-viewer-root');
+    rootElement.setAttribute('id', 'pr-tree-viewer');
     rootElement.append(...elements);
 
     return rootElement;

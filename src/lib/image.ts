@@ -4,7 +4,7 @@ import {
   getIconForOpenFolder
 } from 'vscode-icons-js';
 
-export const getImageOfFileExtension = (fileName) => {
+export const getImageOfFileExtension = (fileName: string) => {
   const image = new Image();
   image.src = require(`../assets/icons/${getIconForFile(fileName)}`);
 
