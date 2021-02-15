@@ -39,9 +39,8 @@ export default class PRTreeViewer {
     this.observer = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
         if (
-          Array.from(
-            (mutation.target as HTMLElement).classList
-          ).includes('js-diff-progressive-container')
+          (mutation.target as HTMLElement).classList
+          .contains('js-diff-progressive-container')
         ) {
           this.renderedResult[0] = this.changedFiles.render();
           this.render();

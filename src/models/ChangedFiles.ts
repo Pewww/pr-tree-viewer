@@ -7,7 +7,9 @@ import {
 import { IMAGE_SIZE } from '../constants/variables';
 
 export default class ChangedFiles {
-  private root: any;
+  private root: {
+    [key: string]: object;
+  };
   private rootClassName: string;
 
   constructor() {
@@ -17,11 +19,11 @@ export default class ChangedFiles {
   }
 
   private get fileSrcs() {
-    const fileSrcTags: any = Array.from(
+    const fileSrcTags = Array.from(
       document.querySelectorAll(`.${this.rootClassName} .link-gray-dark`)
     );
 
-    return fileSrcTags?.map(({ innerText }) => innerText) ?? [];
+    return fileSrcTags?.map(({ innerText }: HTMLElement) => innerText) ?? [];
   }
 
   private setStyle() {
@@ -65,21 +67,25 @@ export default class ChangedFiles {
   }
 
   private toggle(id) {
-    const clickedElement = document.getElementById(id) as any;
+    const clickedElement = document.getElementById(id);
 
     if (clickedElement.parentElement.classList.contains('opened')) {
       clickedElement.parentElement.classList.remove('opened');
       clickedElement.previousElementSibling.replaceWith(
         getImageOfClosedFolder()
       );
-      clickedElement.nextElementSibling.style.display = 'none';
+      (clickedElement.nextElementSibling as HTMLElement).style.display = 'none';
     } else {
       clickedElement.parentElement.classList.add('opened');
       clickedElement.previousElementSibling.replaceWith(
         getImageOfOpenedFolder()
       );
-      clickedElement.nextElementSibling.style.display = 'block';
+      (clickedElement.nextElementSibling as HTMLElement).style.display = 'block';
     }
+  }
+
+  private scrollToDestination() {
+
   }
 
   private createNestedLayer(arr, idx, next) {
@@ -141,7 +147,10 @@ export default class ChangedFiles {
       const image = getImageOfFileExtension(name);
       element.append(span, image);
 
-      // 클릭 이벤트 추가
+      span.addEventListener('click', e => {
+        e.stopPropagation();
+        this.scrollToDestination();
+      });
     }
 
     node.children

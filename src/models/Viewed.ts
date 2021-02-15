@@ -1,10 +1,10 @@
 export default class Viewed {
-  private viewedBtns: any;
+  private viewedBtns: HTMLInputElement[];
 
   constructor() {
     this.viewedBtns = Array.from(
       document.getElementsByClassName('js-reviewed-checkbox')
-    );
+    ) as HTMLInputElement[];
   }
 
   public makeAllViewed() {
