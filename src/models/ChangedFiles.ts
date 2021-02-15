@@ -20,10 +20,14 @@ export default class ChangedFiles {
 
   private get fileSrcs() {
     const fileSrcTags = Array.from(
-      document.querySelectorAll(`.${this.rootClassName} .link-gray-dark`)
+      document.querySelectorAll(`.${this.rootClassName} a.link-gray-dark`)
     );
 
-    return fileSrcTags?.map(({ innerText }: HTMLElement) => innerText) ?? [];
+    return fileSrcTags?.map(({ title }: HTMLElement) =>
+      title.includes('→')
+        ? title.split('→')[1].trim()
+        : title
+      ) ?? [];
   }
 
   private setStyle() {
@@ -129,28 +133,25 @@ export default class ChangedFiles {
     } = node.props;
 
     const span = document.createElement('span');
+
     span.setAttribute('id', id);
     span.innerText = name;
+    span.addEventListener('click', e => {
+      e.stopPropagation();
+      node.children
+        ? this.toggle(id)
+        : this.scrollToDestination();
+    });
 
     if (node.children) {
       const ul = document.createElement('ul');
       const image = getImageOfOpenedFolder();
-
-      span.addEventListener('click', e => {
-        e.stopPropagation();
-        this.toggle(id);
-      });
 
       element.append(image, span, ul);
       element.classList.add('opened');
     } else {
       const image = getImageOfFileExtension(name);
       element.append(span, image);
-
-      span.addEventListener('click', e => {
-        e.stopPropagation();
-        this.scrollToDestination();
-      });
     }
 
     node.children
