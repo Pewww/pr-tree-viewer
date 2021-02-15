@@ -36,12 +36,11 @@ export default class ChangedFiles {
 
     const css = `
       #pr-tree-viewer {
-        margin-left: 100px;
         font-size: 14px;
       }
 
       #pr-tree-viewer ul {
-        padding-left: 20px;
+        padding-left: 15px;
       }
 
       #pr-tree-viewer li {
@@ -60,6 +59,10 @@ export default class ChangedFiles {
       #pr-tree-viewer span:hover {
         cursor: pointer;
         text-decoration: underline;
+      }
+
+      #pr-tree-viewer span + img {
+        margin-right: 15px;
       }
     `;
 

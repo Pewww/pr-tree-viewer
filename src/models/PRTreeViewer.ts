@@ -23,7 +23,36 @@ export default class PRTreeViewer {
   }
 
   private setStyle() {
+    const style = document.createElement('style');
+    style.type = 'text/css';
 
+    const css = `
+      #pr-tree-viewer-root {
+        width: 290px;
+        height: 600px;
+        border: 1px solid #e1e4e8;
+        border-radius: 6px;
+        display: inline-block;
+        vertical-align: top;
+        box-sizing: border-box;
+        padding: 15px;
+        white-space: nowrap;
+        overflow: auto;
+      }
+
+      #pr-tree-viewer-root + .js-diff-progressive-container {
+        width: calc(100% - 300px);
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 5px;
+      }
+    `;
+
+    style.appendChild(
+      document.createTextNode(css)
+    );
+
+    document.head.appendChild(style);
   }
 
   private setConfig() {
@@ -61,7 +90,8 @@ export default class PRTreeViewer {
       rootElement.setAttribute('id', 'pr-tree-viewer-root');
       rootElement.append(...this.renderedResult);
 
-      document.body.append(rootElement);
+      const locationTarget = document.getElementById('files');
+      locationTarget.prepend(rootElement);
     }
   }
 }
