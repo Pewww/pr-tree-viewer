@@ -2,9 +2,8 @@ const path = require('path');
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  mode: 'production',
   entry: {
-    main: './src/index.js'
+    main: './src/index.ts'
   },
   output: {
     filename: 'index.js',
@@ -12,6 +11,7 @@ module.exports = {
   },
   resolve: {
     extensions: [
+      '.ts',
       '.js',
       '.svg'
     ],
@@ -19,8 +19,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        loader: require.resolve('babel-loader')
+        test: /\.ts$/,
+        loader: require.resolve('ts-loader')
       },
       {
         test: /\.svg$/,
