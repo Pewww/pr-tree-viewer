@@ -37,13 +37,14 @@ export default class ChangedFiles {
     const css = `
       #pr-tree-viewer {
         font-size: 14px;
+        list-style: none;
       }
 
       #pr-tree-viewer ul {
         padding-left: 15px;
       }
 
-      #pr-tree-viewer li {
+      #pr-tree-viewer ul li {
         list-style: none;
       }
 
@@ -52,7 +53,7 @@ export default class ChangedFiles {
         margin-left: 5px;
       }
 
-      #pr-tree-viewer li.folder > img {
+      #pr-tree-viewer ul li.folder > img {
         margin-left: 8px;
       }
 

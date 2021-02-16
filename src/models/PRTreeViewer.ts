@@ -1,19 +1,20 @@
 import ChangedFiles from './ChangedFiles';
 import Viewed from './Viewed';
+import { $BORDER } from '../constants/variables';
 
 export default class PRTreeViewer {
   private changedFiles: ChangedFiles;
   private viewed: Viewed;
   private mutationObserver: MutationObserver;
   private resizeObserver: ResizeObserver;
-  private renderedResult: [HTMLUListElement, HTMLDivElement];
+  private renderedResult: [HTMLDivElement, HTMLUListElement];
 
   constructor() {
     this.changedFiles = new ChangedFiles();
     this.viewed = new Viewed();
     this.renderedResult = [
-      this.changedFiles.render(),
-      this.viewed.render()
+      this.viewed.render(),
+      this.changedFiles.render()
     ];
 
     this.setMutationObserver();
@@ -31,9 +32,9 @@ export default class PRTreeViewer {
         width: 290px;
         min-width: 290px;
         max-width: 600px;
-        height: 600px;
-        min-height: 600px;
-        border: 1px solid #e1e4e8;
+        height: 650px;
+        min-height: 650px;
+        border: 1px solid ${$BORDER};
         border-radius: 6px;
         display: inline-block;
         vertical-align: top;
@@ -69,7 +70,7 @@ export default class PRTreeViewer {
     this.mutationObserver = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
         if (this.checkIsDiffContainer(mutation.target as HTMLElement)) {
-          this.renderedResult[0] = this.changedFiles.render();
+          this.renderedResult[1] = this.changedFiles.render();
           this.render();
         }
       });
