@@ -52,6 +52,14 @@ export default class ChangedFiles {
         margin-left: 5px;
       }
 
+      #pr-tree-viewer li.folder > img {
+        margin-left: 8px;
+      }
+
+      #pr-tree-viewer span.file-name {
+        margin-left: 12px;
+      }
+
       #pr-tree-viewer img {
         width: ${IMAGE_SIZE}px;
       }
@@ -62,7 +70,7 @@ export default class ChangedFiles {
       }
 
       #pr-tree-viewer span + img {
-        margin-right: 15px;
+        margin-right: 10px;
       }
     `;
 
@@ -151,9 +159,11 @@ export default class ChangedFiles {
       const image = getImageOfOpenedFolder();
 
       element.append(image, span, ul);
-      element.classList.add('opened');
+      element.classList.add('opened', 'folder');
     } else {
       const image = getImageOfFileExtension(name);
+      span.classList.add('file-name');
+
       element.append(span, image);
     }
 

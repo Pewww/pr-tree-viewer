@@ -4,8 +4,8 @@ import Viewed from './Viewed';
 export default class PRTreeViewer {
   private changedFiles: ChangedFiles;
   private viewed: Viewed;
-  private config: MutationObserverInit;
-  private observer: MutationObserver;
+  private mutationObserver: MutationObserver;
+  private resizeObserver: ResizeObserver;
   private renderedResult: [HTMLUListElement, HTMLDivElement];
 
   constructor() {
@@ -16,8 +16,8 @@ export default class PRTreeViewer {
       this.viewed.render()
     ];
 
-    this.setConfig();
     this.setMutationObserver();
+    this.setResizeObserver();
 
     this.setStyle();
   }
@@ -29,7 +29,10 @@ export default class PRTreeViewer {
     const css = `
       #pr-tree-viewer-root {
         width: 290px;
+        min-width: 290px;
+        max-width: 600px;
         height: 600px;
+        min-height: 600px;
         border: 1px solid #e1e4e8;
         border-radius: 6px;
         display: inline-block;
@@ -38,6 +41,7 @@ export default class PRTreeViewer {
         padding: 15px;
         white-space: nowrap;
         overflow: auto;
+        resize: both;
       }
 
       #pr-tree-viewer-root + .js-diff-progressive-container {
@@ -55,40 +59,62 @@ export default class PRTreeViewer {
     document.head.appendChild(style);
   }
 
-  private setConfig() {
-    this.config = {
-      childList: true,
-      subtree: true
-    };
+  private checkIsDiffContainer(target: HTMLElement) {
+    return target.classList.contains('js-diff-progressive-container');
   }
 
   private setMutationObserver() {
-    const targetElement = document.getElementById('files_bucket');
+    const filesBucketElement = document.getElementById('files_bucket');
 
-    this.observer = new MutationObserver(mutations => {
+    this.mutationObserver = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
-        if (
-          (mutation.target as HTMLElement).classList
-          .contains('js-diff-progressive-container')
-        ) {
+        if (this.checkIsDiffContainer(mutation.target as HTMLElement)) {
           this.renderedResult[0] = this.changedFiles.render();
           this.render();
         }
       });
     });
 
-    this.observer.observe(targetElement, this.config);
+    this.mutationObserver.observe(filesBucketElement, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  private checkIsPrTreeViewerRoot(target: HTMLElement) {
+    return target.getAttribute('id') === 'pr-tree-viewer-root';
+  }
+
+  private setDiffContainerWidthAgain(size: readonly ResizeObserverSize[]) {
+    const diffContainer = document.querySelector('#pr-tree-viewer-root + .js-diff-progressive-container') as HTMLElement;
+    const [{ inlineSize }] = size;
+    const sizeBuffer = 10;
+
+    diffContainer.style.width = `calc(100% - ${inlineSize + sizeBuffer}px)`;
+  }
+
+  private setResizeObserver() {
+    this.resizeObserver = new ResizeObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (this.checkIsPrTreeViewerRoot(mutation.target as HTMLElement)) {
+          this.setDiffContainerWidthAgain(mutation.borderBoxSize);
+        }
+      });
+    });
   }
 
   public render() {
     if (document.getElementById('pr-tree-viewer-root')) {
       const rootElement = document.getElementById('pr-tree-viewer-root');
+
       // @ts-ignore
       rootElement.replaceChildren(...this.renderedResult);
     } else {
       const rootElement = document.createElement('div');
       rootElement.setAttribute('id', 'pr-tree-viewer-root');
       rootElement.append(...this.renderedResult);
+
+      this.resizeObserver.observe(rootElement);
 
       const locationTarget = document.getElementById('files');
       locationTarget.prepend(rootElement);
