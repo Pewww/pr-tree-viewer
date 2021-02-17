@@ -91,6 +91,10 @@ export default class PRTreeViewer {
     const [{ inlineSize }] = size;
     const sizeBuffer = 10;
 
+    if (!diffContainer) {
+      return;
+    }
+
     diffContainer.style.width = `calc(100% - ${inlineSize + sizeBuffer}px)`;
   }
 

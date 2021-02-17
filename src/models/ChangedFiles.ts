@@ -259,6 +259,10 @@ export default class ChangedFiles {
       changed,
       types
     } = diffStat;
+    
+    if (Number.isNaN(changed) || types.includes(undefined)) {
+      return;
+    }
 
     const div = document.createElement('div');
     div.setAttribute('id', 'diff-stat');
@@ -307,7 +311,11 @@ export default class ChangedFiles {
       );
       span.classList.add('file-name');
 
-      element.append(span, image, diffStatElement);
+      const appendingElements = diffStatElement
+        ? [span, image, diffStatElement]
+        : [span, image];
+
+      element.append(...appendingElements);
     }
 
     node.children
