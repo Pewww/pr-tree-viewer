@@ -1,3 +1,5 @@
+import isEmpty from 'lodash.isempty';
+
 import { getRandomId } from '../lib/random';
 import {
   getImageOfFileExtension,
@@ -119,41 +121,45 @@ export default class ChangedFiles {
   }
 
   private createVirtualDOM(target) {
-    const targetKeys = Object.keys(target);
-
-    if (!targetKeys.length) {
+    if (isEmpty(target)) {
       return;
     }
 
-    return targetKeys.map(key => ({
-      type: 'li',
-      props: {
-        name: key,
-        id: getRandomId()
-      },
-      children: this.createVirtualDOM(
-        target[key]
-      )
-    }));
+    return Object.keys(target).map(key => {
+      const id = getRandomId();
+
+      return {
+        type: 'li',
+        props: {
+          name: key,
+          id,
+          onClick: (e: MouseEvent) => {
+            e.stopPropagation();
+            isEmpty(target[key])
+              ? this.scrollToDestination()
+              : this.toggle(id);
+          }
+        },
+        children: this.createVirtualDOM(
+          target[key]
+        )
+      };
+    });
   }
 
   private createElement(node) {
     const element = document.createElement(node.type);
     const {
       id,
-      name
+      name,
+      onClick
     } = node.props;
 
     const span = document.createElement('span');
 
     span.setAttribute('id', id);
     span.innerText = name;
-    span.addEventListener('click', e => {
-      e.stopPropagation();
-      node.children
-        ? this.toggle(id)
-        : this.scrollToDestination();
-    });
+    span.addEventListener('click', onClick);
 
     if (node.children) {
       const ul = document.createElement('ul');
