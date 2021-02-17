@@ -26,6 +26,10 @@ export default class Viewed {
         background-color: ${$WHITE};
       }
 
+      #viewed-btns-wrapper button:disabled {
+        cursor: not-allowed;
+      }
+
       #viewed-btns-wrapper button:first-child {
         margin-right: 5px;
       }
@@ -38,36 +42,76 @@ export default class Viewed {
     document.head.appendChild(style);
   }
 
-  private hideAll() {
-    const viewedBtns = Array.from(
-      document.getElementsByClassName('js-reviewed-checkbox')
-    ) as HTMLInputElement[];
-
-    viewedBtns.forEach(btn => {
-      if (!btn.checked) {
-        btn.click();
-      }
+  private controlBtnsClickable(target: HTMLButtonElement, isClickable: boolean) {
+    Array.from(target.parentElement.children).forEach((btn: HTMLButtonElement) => {
+      btn.disabled = !isClickable;
     });
   }
 
-  private showAll() {
-    const viewedBtns = Array.from(
+  private hideAll(target: HTMLButtonElement) {
+    this.controlBtnsClickable(target, false);
+
+    const checkBoxes = Array.from(
       document.getElementsByClassName('js-reviewed-checkbox')
     ) as HTMLInputElement[];
 
-    viewedBtns.forEach(btn => {
-      if (btn.checked) {
-        btn.click();
+    const self = this;
+    const maxLoop = checkBoxes.length;
+    let requestId = 0;
+    let idx = 0;
+
+    (function loop() {
+      if (idx >= maxLoop) {
+        window.cancelAnimationFrame(requestId);
+        self.controlBtnsClickable(target, true);
+        return;
       }
-    });
+
+      requestId = window.requestAnimationFrame(loop);
+      
+      if (!checkBoxes[idx].checked) {
+        checkBoxes[idx].click();
+      }
+
+      idx += 1;
+    })();
+  }
+
+  private showAll(target: HTMLButtonElement) {
+    this.controlBtnsClickable(target, false);
+
+    const checkBoxes = Array.from(
+      document.getElementsByClassName('js-reviewed-checkbox')
+    ) as HTMLInputElement[];
+
+    const self = this;
+    const maxLoop = checkBoxes.length;
+    let requestId = 0;
+    let idx = 0;
+
+    (function loop() {
+      if (idx >= maxLoop) {
+        window.cancelAnimationFrame(requestId);
+        self.controlBtnsClickable(target, true);
+        return;
+      }
+
+      requestId = window.requestAnimationFrame(loop);
+      
+      if (checkBoxes[idx].checked) {
+        checkBoxes[idx].click();
+      }
+
+      idx += 1;
+    })();
   }
 
   private renderHideBtn() {
     const button = document.createElement('button');
 
     button.innerText = "Hide all files"
-    button.addEventListener('click', () => {
-      this.hideAll();
+    button.addEventListener('click', e => {
+      this.hideAll(e.target as HTMLButtonElement);
     });
 
     return button;
@@ -77,8 +121,8 @@ export default class Viewed {
     const button = document.createElement('button');
 
     button.innerText = "Show all files"
-    button.addEventListener('click', () => {
-      this.showAll();
+    button.addEventListener('click', e => {
+      this.showAll(e.target as HTMLButtonElement);
     });
 
     return button;
