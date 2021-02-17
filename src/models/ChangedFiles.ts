@@ -6,30 +6,46 @@ import {
   getImageOfOpenedFolder,
   getImageOfClosedFolder
 } from '../lib/image';
-import { IMAGE_SIZE } from '../constants/variables';
+import {
+  IMAGE_SIZE,
+  $DIFFSTAT_ADDED,
+  $DIFFSTAT_DELETED,
+  $DIFFSTAT_NEUTRAL
+} from '../constants/variables';
+import { CustomDiffStatType } from '../enums/DiffStat';
+
+interface IRoot {
+  [key: string]: any;
+}
+
+interface IVirtualDOM {
+  type: string;
+  props: {
+    name: string;
+    fullName: string;
+    id: string;
+    onClick: (e: MouseEvent) => void;
+  },
+  children: IVirtualDOM[];
+}
+
+interface IDiffStat {
+  changed: number;
+  types: string[];
+}
+
+interface IDiffStats {
+  [key: string]: IDiffStat;
+}
 
 export default class ChangedFiles {
-  private root: {
-    [key: string]: object;
-  };
+  private root: IRoot;
   private rootClassName: string;
 
   constructor() {
     this.root = {};
     this.rootClassName = 'file-info';
     this.setStyle();
-  }
-
-  private get fileSrcs() {
-    const fileSrcTags = Array.from(
-      document.querySelectorAll(`.${this.rootClassName} a.link-gray-dark`)
-    );
-
-    return fileSrcTags?.map(({ title }: HTMLElement) =>
-      title.includes('→')
-        ? title.split('→')[1].trim()
-        : title
-      ) ?? [];
   }
 
   private setStyle() {
@@ -72,8 +88,36 @@ export default class ChangedFiles {
         text-decoration: underline;
       }
 
-      #pr-tree-viewer span + img {
+      #pr-tree-viewer #diff-stat {
+        display: inline-block;
+        vertical-align: middle;
+        height: 22px;
         margin-right: 10px;
+      }
+
+      #pr-tree-viewer #diff-stat .diff-text {
+        font-size: 12px;
+        padding-right: 3px;
+      }
+
+      #pr-tree-viewer #diff-stat .stat-type {
+        display: inline-block;
+        vertical-align: middle;
+        width: 7px;
+        height: 7px;
+        margin-left: 1px;
+      }
+
+      #pr-tree-viewer #diff-stat .added {
+        background-color: ${$DIFFSTAT_ADDED};
+      }
+
+      #pr-tree-viewer #diff-stat .deleted {
+        background-color: ${$DIFFSTAT_DELETED};
+      }
+
+      #pr-tree-viewer #diff-stat .neutral {
+        background-color: ${$DIFFSTAT_NEUTRAL};
       }
     `;
 
@@ -84,7 +128,46 @@ export default class ChangedFiles {
     document.head.appendChild(style);
   }
 
-  private toggle(id) {
+  private getFileSrcs() {
+    const fileSrcTags = Array.from(
+      document.querySelectorAll(`.${this.rootClassName} a.link-gray-dark`)
+    );
+
+    return fileSrcTags?.map(({ title }: HTMLElement) =>
+      title.includes('→')
+        ? title.split('→')[1].trim()
+        : title
+      ) ?? [];
+  }
+
+  private filterToCustomDiffStat(diffStatTag: HTMLElement) {
+    const changed = parseInt(diffStatTag.innerText, 10);
+    const types = Array.from(diffStatTag.children).map(diffStat =>
+      CustomDiffStatType[diffStat.classList.value]
+    );
+
+    return {
+      changed,
+      types
+    };
+  }
+
+  private getDiffStats(fileSrcs: string[]) {
+    const diffStatTags = Array.from(
+      document.querySelectorAll(`.${this.rootClassName} span.diffstat`)
+    );
+    const customDiffStats = {};
+
+    fileSrcs.forEach((src, index) => {
+      customDiffStats[src] = this.filterToCustomDiffStat(
+        diffStatTags[index] as HTMLElement
+      );
+    });
+
+    return customDiffStats;
+  }
+
+  private toggle(id: string) {
     const clickedElement = document.getElementById(id);
 
     if (clickedElement.parentElement.classList.contains('opened')) {
@@ -106,7 +189,7 @@ export default class ChangedFiles {
 
   }
 
-  private createNestedLayer(arr, idx, next) {
+  private createNestedLayer(arr: string[], idx: number, next: IRoot) {
     const currVal = arr[idx];
 
     if (!currVal) {
@@ -114,45 +197,76 @@ export default class ChangedFiles {
     }
 
     next[currVal] = {
-      ...next[currVal]
+      ...next[currVal],
     };
 
     this.createNestedLayer(arr, idx + 1, next[currVal]);
   }
 
-  private createVirtualDOM(target) {
+  private createVirtualDOM(target: IRoot, parentName: string) {
     if (isEmpty(target)) {
       return;
     }
 
     return Object.keys(target).map(key => {
       const id = getRandomId();
+      const fullName = parentName
+        ? `${parentName}/${key}`
+        : key;
 
       return {
         type: 'li',
         props: {
           name: key,
+          fullName,
           id,
           onClick: (e: MouseEvent) => {
             e.stopPropagation();
             isEmpty(target[key])
               ? this.scrollToDestination()
               : this.toggle(id);
-          }
+          },
         },
         children: this.createVirtualDOM(
-          target[key]
+          target[key],
+          fullName
         )
       };
     });
   }
+  
+  private renderDiffStat(diffStat: IDiffStat) {
+    const {
+      changed,
+      types
+    } = diffStat;
 
-  private createElement(node) {
+    const div = document.createElement('div');
+    div.setAttribute('id', 'diff-stat');
+
+    const textSpan = document.createElement('span');
+    textSpan.classList.add('diff-text');
+    textSpan.innerText = changed.toLocaleString();
+
+    const typeSpans = types.map(type => {
+      const span = document.createElement('span');
+      span.classList.add(type, 'stat-type');
+
+      return span;
+    });
+
+    div.append(textSpan, ...typeSpans);
+
+    return div;
+  }
+
+  private createElement(node: IVirtualDOM, diffStats: IDiffStats) {
     const element = document.createElement(node.type);
     const {
       id,
       name,
-      onClick
+      onClick,
+      fullName
     } = node.props;
 
     const span = document.createElement('span');
@@ -169,13 +283,16 @@ export default class ChangedFiles {
       element.classList.add('opened', 'folder');
     } else {
       const image = getImageOfFileExtension(name);
+      const diffStatElement = this.renderDiffStat(
+        diffStats[fullName]
+      );
       span.classList.add('file-name');
 
-      element.append(span, image);
+      element.append(span, image, diffStatElement);
     }
 
     node.children
-      ?.map(child => this.createElement(child))
+      ?.map(child => this.createElement(child, diffStats))
       .forEach(elem => {
         element.lastElementChild.appendChild(elem);
       });
@@ -184,16 +301,18 @@ export default class ChangedFiles {
   }
 
   public render() {
-    this.fileSrcs.forEach(src => {
+    const fileSrcs = this.getFileSrcs();
+    fileSrcs.forEach(src => {
       const splitedSrc = src.split('/');
       this.createNestedLayer(splitedSrc, 0, this.root);
     });
 
-    const virtualDOM = this.createVirtualDOM(this.root);
+    const virtualDOM = this.createVirtualDOM(this.root, '');
     const elements = [];
+    const diffStats = this.getDiffStats(fileSrcs);
 
     virtualDOM.forEach(node => {
-      const element = this.createElement(node);
+      const element = this.createElement(node, diffStats);
       elements.push(element);
     });
 
@@ -203,6 +322,4 @@ export default class ChangedFiles {
 
     return rootElement;
   }
-
-  // render - diff stat 추가
 }
