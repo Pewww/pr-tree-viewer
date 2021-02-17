@@ -6,7 +6,12 @@ import {
 
 export const getImageOfFileExtension = (fileName: string) => {
   const image = new Image();
-  image.src = require(`../assets/icons/${getIconForFile(fileName)}`);
+
+  try {
+    image.src = require(`../assets/icons/${getIconForFile(fileName)}`);
+  } catch(e) {
+    image.src = require(`../assets/icons/${getIconForFile('')}`);
+  }
 
   return image;
 };
