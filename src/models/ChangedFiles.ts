@@ -185,8 +185,27 @@ export default class ChangedFiles {
     }
   }
 
-  private scrollToDestination() {
+  private scrollToDestination(fullName: string) {
+    const fileSrcTags = Array.from(
+      document.querySelectorAll(`.${this.rootClassName} a.link-gray-dark`)
+    );
+    const targetIdx = fileSrcTags.findIndex(({ title }: HTMLAnchorElement) =>
+      title.endsWith(fullName)
+    );
 
+    if (targetIdx === -1) {
+      return alert('Cannot find file name!');
+    }
+
+    const checkBoxes = Array.from(
+      document.getElementsByClassName('js-reviewed-checkbox')
+    ) as HTMLInputElement[];    
+
+    if (checkBoxes[targetIdx].checked) {
+      checkBoxes[targetIdx].click();
+    }
+
+    fileSrcTags[targetIdx].scrollIntoView();
   }
 
   private createNestedLayer(arr: string[], idx: number, next: IRoot) {
@@ -223,7 +242,7 @@ export default class ChangedFiles {
           onClick: (e: MouseEvent) => {
             e.stopPropagation();
             isEmpty(target[key])
-              ? this.scrollToDestination()
+              ? this.scrollToDestination(fullName)
               : this.toggle(id);
           },
         },
@@ -322,4 +341,6 @@ export default class ChangedFiles {
 
     return rootElement;
   }
+
+  // diff stat optional 하게
 }
