@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "copy-webpack-plugin": "^7.0.0",
+    "css-loader": "^5.0.2",
+    "file-icons-js": "^1.1.0",
+    "file-loader": "^6.2.0",
     "lodash.isempty": "^4.4.0",
+    "style-loader": "^2.0.0",
     "svg-url-loader": "^7.1.1",
     "ts-loader": "^8.0.17",
     "typescript": "^4.1.5",
