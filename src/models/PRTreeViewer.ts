@@ -121,6 +121,8 @@ export default class PrTreeViewer {
     if (document.getElementById('pr-tree-viewer-root')) {
       const rootElement = document.getElementById('pr-tree-viewer-root');
 
+      this.resizeObserver.observe(rootElement);
+
       // @ts-ignore
       rootElement.replaceChildren(...this.renderedResult);
     } else {
