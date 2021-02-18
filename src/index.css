@@ -1,0 +1,119 @@
+/* ----- file-icons-js CSS ----- */
+@import '~file-icons-js/css/style.css';
+
+/* ----- PR-Tree-Viewer CSS ----- */
+#pr-tree-viewer-root {
+  width: 290px;
+  min-width: 290px;
+  max-width: 700px;
+  height: 650px;
+  min-height: 650px;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  padding: 15px;
+  white-space: nowrap;
+  overflow: auto;
+  resize: both;
+}
+
+#pr-tree-viewer-root + .js-diff-progressive-container {
+  width: calc(100% - 300px);
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 5px;
+}
+
+#pr-tree-viewer-root #pr-changed-files {
+  font-size: 14px;
+  list-style: none;
+}
+
+#pr-tree-viewer-root #pr-changed-files ul {
+  padding-left: 15px;
+}
+
+#pr-tree-viewer-root #pr-changed-files ul li {
+  list-style: none;
+}
+
+#pr-tree-viewer-root #pr-changed-files img,
+#pr-tree-viewer-root #pr-changed-files span {
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+#pr-tree-viewer-root #pr-changed-files ul li.folder > img {
+  margin-left: 8px;
+}
+
+#pr-tree-viewer-root #pr-changed-files span.file-name {
+  margin-left: 12px;
+}
+
+#pr-tree-viewer-root #pr-changed-files img {
+  width: 14px;
+}
+
+#pr-tree-viewer-root #pr-changed-files span:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#pr-tree-viewer-root #pr-changed-files #diff-stat {
+  display: inline-block;
+  vertical-align: middle;
+  height: 22px;
+  margin-right: 10px;
+}
+
+#pr-tree-viewer-root #pr-changed-files #diff-stat .diff-text {
+  font-size: 12px;
+  padding-right: 3px;
+}
+
+#pr-tree-viewer-root #pr-changed-files #diff-stat .stat-type {
+  display: inline-block;
+  vertical-align: middle;
+  width: 7px;
+  height: 7px;
+  margin-left: 1px;
+}
+
+#pr-tree-viewer-root #pr-changed-files #diff-stat .added {
+  background-color: #28a745;
+}
+
+#pr-tree-viewer-root #pr-changed-files #diff-stat .deleted {
+  background-color: #d73a49;
+}
+
+#pr-tree-viewer-root #pr-changed-files #diff-stat .neutral {
+  background-color: #d1d5da;
+}
+
+#pr-tree-viewer-root #viewed-btns-wrapper {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#pr-tree-viewer-root #viewed-btns-wrapper button {
+  border: 0;
+  padding: 8px 20px;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  color: #0c79f8;
+  font-weight: 600;
+  background-color: #fff;
+}
+
+#pr-tree-viewer-root #viewed-btns-wrapper button:disabled {
+  cursor: not-allowed;
+}
+
+#pr-tree-viewer-root #viewed-btns-wrapper button:first-child {
+  margin-right: 5px;
+}
