@@ -141,7 +141,10 @@ export default class ChangedFiles {
   }
 
   private filterToCustomDiffStat(diffStatTag: HTMLElement) {
-    const changed = parseInt(diffStatTag.innerText, 10);
+    const changed = parseInt(
+      diffStatTag.innerText.replace(/,/g, ''),
+      10
+    );
     const types = Array.from(diffStatTag.children).map(diffStat =>
       CustomDiffStatType[diffStat.classList.value]
     );

@@ -1,7 +1,7 @@
-import PRTreeViewer from './models/PRTreeViewer';
+import PrTreeViewer from './models/PrTreeViewer';
 
 const start = () => {
-  const prTreeViewer = new PRTreeViewer();
+  const prTreeViewer = new PrTreeViewer();
   prTreeViewer.render();
 };
 

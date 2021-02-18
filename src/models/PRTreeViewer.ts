@@ -2,7 +2,7 @@ import ChangedFiles from './ChangedFiles';
 import Viewed from './Viewed';
 import { $BORDER } from '../constants/variables';
 
-export default class PRTreeViewer {
+export default class PrTreeViewer {
   private changedFiles: ChangedFiles;
   private viewed: Viewed;
   private mutationObserver: MutationObserver;
@@ -26,7 +26,7 @@ export default class PRTreeViewer {
       #pr-tree-viewer-root {
         width: 290px;
         min-width: 290px;
-        max-width: 600px;
+        max-width: 700px;
         height: 650px;
         min-height: 650px;
         border: 1px solid ${$BORDER};
