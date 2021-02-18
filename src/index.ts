@@ -1,4 +1,5 @@
 import PrTreeViewer from './models/PrTreeViewer';
+import './index.css';
 
 const start = () => {
   const prTreeViewer = new PrTreeViewer();

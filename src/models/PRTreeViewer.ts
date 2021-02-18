@@ -1,6 +1,5 @@
 import ChangedFiles from './ChangedFiles';
 import Viewed from './Viewed';
-import { $BORDER } from '../constants/variables';
 
 export default class PrTreeViewer {
   private changedFiles: ChangedFiles;
@@ -14,45 +13,6 @@ export default class PrTreeViewer {
 
     this.setMutationObserver();
     this.setResizeObserver();
-
-    this.setStyle();
-  }
-
-  private setStyle() {
-    const style = document.createElement('style');
-    style.type = 'text/css';
-
-    const css = `
-      #pr-tree-viewer-root {
-        width: 290px;
-        min-width: 290px;
-        max-width: 700px;
-        height: 650px;
-        min-height: 650px;
-        border: 1px solid ${$BORDER};
-        border-radius: 6px;
-        display: inline-block;
-        vertical-align: top;
-        box-sizing: border-box;
-        padding: 15px;
-        white-space: nowrap;
-        overflow: auto;
-        resize: both;
-      }
-
-      #pr-tree-viewer-root + .js-diff-progressive-container {
-        width: calc(100% - 300px);
-        display: inline-block;
-        vertical-align: top;
-        margin-left: 5px;
-      }
-    `;
-
-    style.appendChild(
-      document.createTextNode(css)
-    );
-
-    document.head.appendChild(style);
   }
 
   private get renderedResult() {

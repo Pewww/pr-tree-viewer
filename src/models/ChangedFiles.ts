@@ -1,17 +1,7 @@
 import isEmpty from 'lodash.isempty';
 
 import { getRandomId } from '../lib/random';
-import {
-  getImageOfFileExtension,
-  getImageOfOpenedFolder,
-  getImageOfClosedFolder
-} from '../lib/image';
-import {
-  IMAGE_SIZE,
-  $DIFFSTAT_ADDED,
-  $DIFFSTAT_DELETED,
-  $DIFFSTAT_NEUTRAL
-} from '../constants/variables';
+import { getImageOfOpenedFolder, getImageOfClosedFolder } from '../lib/image';
 import { CustomDiffStatType } from '../enums/DiffStat';
 
 interface IRoot {
@@ -45,87 +35,6 @@ export default class ChangedFiles {
   constructor() {
     this.root = {};
     this.rootClassName = 'file-info';
-    this.setStyle();
-  }
-
-  private setStyle() {
-    const style = document.createElement('style');
-    style.type = 'text/css';
-
-    const css = `
-      #pr-tree-viewer {
-        font-size: 14px;
-        list-style: none;
-      }
-
-      #pr-tree-viewer ul {
-        padding-left: 15px;
-      }
-
-      #pr-tree-viewer ul li {
-        list-style: none;
-      }
-
-      #pr-tree-viewer img, #pr-tree-viewer span {
-        vertical-align: middle;
-        margin-left: 5px;
-      }
-
-      #pr-tree-viewer ul li.folder > img {
-        margin-left: 8px;
-      }
-
-      #pr-tree-viewer span.file-name {
-        margin-left: 12px;
-      }
-
-      #pr-tree-viewer img {
-        width: ${IMAGE_SIZE}px;
-      }
-
-      #pr-tree-viewer span:hover {
-        cursor: pointer;
-        text-decoration: underline;
-      }
-
-      #pr-tree-viewer #diff-stat {
-        display: inline-block;
-        vertical-align: middle;
-        height: 22px;
-        margin-right: 10px;
-      }
-
-      #pr-tree-viewer #diff-stat .diff-text {
-        font-size: 12px;
-        padding-right: 3px;
-      }
-
-      #pr-tree-viewer #diff-stat .stat-type {
-        display: inline-block;
-        vertical-align: middle;
-        width: 7px;
-        height: 7px;
-        margin-left: 1px;
-      }
-
-      #pr-tree-viewer #diff-stat .added {
-        background-color: ${$DIFFSTAT_ADDED};
-      }
-
-      #pr-tree-viewer #diff-stat .deleted {
-        background-color: ${$DIFFSTAT_DELETED};
-      }
-
-      #pr-tree-viewer #diff-stat .neutral {
-        background-color: ${$DIFFSTAT_NEUTRAL};
-      }
-    `;
-
-    style.appendChild(
-      document.createTextNode(css)
-    );
-
-    document.head.appendChild(style);
   }
 
   private getFileSrcs() {
@@ -308,7 +217,7 @@ export default class ChangedFiles {
       element.append(image, span, ul);
       element.classList.add('opened', 'folder');
     } else {
-      const image = getImageOfFileExtension(name);
+      const image = getImageOfClosedFolder();
       const diffStatElement = this.renderDiffStat(
         diffStats[fullName]
       );
@@ -352,7 +261,7 @@ export default class ChangedFiles {
     });
 
     const rootElement = document.createElement('ul');
-    rootElement.setAttribute('id', 'pr-tree-viewer');
+    rootElement.setAttribute('id', 'pr-changed-files');
     rootElement.append(...elements);
 
     return rootElement;
