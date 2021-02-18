@@ -11,7 +11,7 @@
     {
       "run_at": "document_idle",
       "matches": [
-        "*://github.com/*/pull/*/files"
+        "*://github.com/*"
       ],
       "js": [
         "index.js"

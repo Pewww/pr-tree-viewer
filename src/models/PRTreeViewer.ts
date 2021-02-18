@@ -7,15 +7,10 @@ export default class PRTreeViewer {
   private viewed: Viewed;
   private mutationObserver: MutationObserver;
   private resizeObserver: ResizeObserver;
-  private renderedResult: [HTMLDivElement, HTMLUListElement];
 
   constructor() {
     this.changedFiles = new ChangedFiles();
     this.viewed = new Viewed();
-    this.renderedResult = [
-      this.viewed.render(),
-      this.changedFiles.render()
-    ];
 
     this.setMutationObserver();
     this.setResizeObserver();
@@ -60,6 +55,13 @@ export default class PRTreeViewer {
     document.head.appendChild(style);
   }
 
+  private get renderedResult() {
+    return [
+      this.viewed.render(),
+      this.changedFiles.render()
+    ];
+  }
+
   private checkIsDiffContainer(target: HTMLElement) {
     return target.classList.contains('js-diff-progressive-container');
   }
@@ -67,10 +69,13 @@ export default class PRTreeViewer {
   private setMutationObserver() {
     const filesBucketElement = document.getElementById('files_bucket');
 
+    if (!filesBucketElement) {
+      return;
+    }
+
     this.mutationObserver = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
         if (this.checkIsDiffContainer(mutation.target as HTMLElement)) {
-          this.renderedResult[1] = this.changedFiles.render();
           this.render();
         }
       });
@@ -109,6 +114,10 @@ export default class PRTreeViewer {
   }
 
   public render() {
+    if (this.renderedResult.includes(null)) {
+      return;
+    }
+
     if (document.getElementById('pr-tree-viewer-root')) {
       const rootElement = document.getElementById('pr-tree-viewer-root');
 

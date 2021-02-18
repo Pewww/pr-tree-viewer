@@ -133,11 +133,11 @@ export default class ChangedFiles {
       document.querySelectorAll(`.${this.rootClassName} a.link-gray-dark`)
     );
 
-    return fileSrcTags?.map(({ title }: HTMLElement) =>
+    return fileSrcTags.map(({ title }: HTMLElement) =>
       title.includes('→')
         ? title.split('→')[1].trim()
         : title
-      ) ?? [];
+      );
   }
 
   private filterToCustomDiffStat(diffStatTag: HTMLElement) {
@@ -329,6 +329,11 @@ export default class ChangedFiles {
 
   public render() {
     const fileSrcs = this.getFileSrcs();
+    
+    if (isEmpty(fileSrcs)) {
+      return null;
+    }
+
     fileSrcs.forEach(src => {
       const splitedSrc = src.split('/');
       this.createNestedLayer(splitedSrc, 0, this.root);
