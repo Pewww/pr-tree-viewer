@@ -1,5 +1,5 @@
 const path = require('path');
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -13,6 +13,7 @@ module.exports = {
     extensions: [
       '.ts',
       '.js',
+      '.css',
       '.svg'
     ],
   },
@@ -20,23 +21,34 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        loader: require.resolve('ts-loader')
+        loader: 'ts-loader'
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       },
       {
         test: /\.svg$/,
-        loader: require.resolve('svg-url-loader'),
+        loader: 'svg-url-loader',
         options: {
           encoding: 'base64'
         }
       },
       {
         test: /\.(png|jpe?g|gif)$/,
-        loader: require.resolve('url-loader'),
+        loader: 'url-loader',
         options: {
           name: '[hash].[ext]',
           limit: 10000,
           esModule: false
         }
+      },
+      {
+        test: /\.(woff2)$/,
+        loader: 'file-loader'
       }
     ]
   },
