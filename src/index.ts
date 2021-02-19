@@ -1,4 +1,5 @@
 import PrTreeViewer from './models/PrTreeViewer';
+import { loadFonts } from './lib/fonts';
 import './index.css';
 
 const start = () => {
@@ -14,3 +15,4 @@ rootMutationObserver.observe(pjaxContainer, {
 });
 
 start();
+loadFonts();
