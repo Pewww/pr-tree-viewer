@@ -17,5 +17,6 @@
         "index.js"
       ]
     }
-  ]
+  ],
+  "web_accessible_resources": ["*.woff2"]
 }

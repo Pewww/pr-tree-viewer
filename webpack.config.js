@@ -38,17 +38,11 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpe?g|gif)$/,
-        loader: 'url-loader',
-        options: {
-          name: '[hash].[ext]',
-          limit: 10000,
-          esModule: false
-        }
-      },
-      {
         test: /\.(woff2)$/,
-        loader: 'file-loader'
+        loader: 'file-loader',
+        options: {
+          name: '/fonts/[name].[ext]'
+        }
       }
     ]
   },
