@@ -1,15 +1,21 @@
+import isEmpty from 'lodash.isempty';
+import compact from 'lodash.compact';
+
 import ChangedFiles from './ChangedFiles';
 import Viewed from './Viewed';
+import Option from './Option';
 
 export default class PrTreeViewer {
   private changedFiles: ChangedFiles;
   private viewed: Viewed;
+  private option: Option;
   private mutationObserver: MutationObserver;
   private resizeObserver: ResizeObserver;
 
   constructor() {
     this.changedFiles = new ChangedFiles();
     this.viewed = new Viewed();
+    this.option = new Option();
 
     this.setMutationObserver();
     this.setResizeObserver();
@@ -18,6 +24,7 @@ export default class PrTreeViewer {
   private get renderedResult() {
     return [
       this.viewed.render(),
+      this.option.render(),
       this.changedFiles.render()
     ];
   }
@@ -74,7 +81,9 @@ export default class PrTreeViewer {
   }
 
   public render() {
-    if (this.renderedResult.includes(null)) {
+    const renderedResult = compact(this.renderedResult);
+
+    if (isEmpty(renderedResult)) {
       return;
     }
 
@@ -84,11 +93,11 @@ export default class PrTreeViewer {
       this.resizeObserver.observe(rootElement);
 
       // @ts-ignore
-      rootElement.replaceChildren(...this.renderedResult);
+      rootElement.replaceChildren(...renderedResult);
     } else {
       const rootElement = document.createElement('div');
-      rootElement.setAttribute('id', 'pr-tree-viewer-root');
-      rootElement.append(...this.renderedResult);
+      rootElement.id = 'pr-tree-viewer-root';
+      rootElement.append(...renderedResult);
 
       this.resizeObserver.observe(rootElement);
 

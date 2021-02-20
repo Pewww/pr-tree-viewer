@@ -1,8 +1,10 @@
 import isEmpty from 'lodash.isempty';
+import * as fileIcons from 'file-icons-js';
 
 import { getRandomId } from '../lib/random';
 import { getImageOfOpenedFolder, getImageOfClosedFolder } from '../lib/image';
 import { CustomDiffStatType } from '../enums/DiffStat';
+import { STORAGE_KEY } from '../constants/storage';
 
 interface IRoot {
   [key: string]: any;
@@ -65,6 +67,12 @@ export default class ChangedFiles {
   }
 
   private getDiffStats(fileSrcs: string[]) {
+    const isShowDiffStat = localStorage.getItem(STORAGE_KEY) === 'YES';
+
+    if (!isShowDiffStat) {
+      return;
+    }
+
     const diffStatTags = Array.from(
       document.querySelectorAll(`.${this.rootClassName} span.diffstat`)
     );
@@ -100,24 +108,16 @@ export default class ChangedFiles {
   private scrollToDestination(fullName: string) {
     const fileSrcTags = Array.from(
       document.querySelectorAll(`.${this.rootClassName} a.link-gray-dark`)
-    );
-    const targetIdx = fileSrcTags.findIndex(({ title }: HTMLAnchorElement) =>
-      title.endsWith(fullName)
+    ) as HTMLAnchorElement[];
+    const targetIdx = fileSrcTags.findIndex(({ title }) =>
+      title.endsWith(fullName)  
     );
 
     if (targetIdx === -1) {
       return alert('Cannot find file name!');
     }
 
-    const checkBoxes = Array.from(
-      document.getElementsByClassName('js-reviewed-checkbox')
-    ) as HTMLInputElement[];    
-
-    if (checkBoxes[targetIdx].checked) {
-      checkBoxes[targetIdx].click();
-    }
-
-    fileSrcTags[targetIdx].scrollIntoView();
+    location.href = fileSrcTags[targetIdx].href;
   }
 
   private createNestedLayer(arr: string[], idx: number, next: IRoot) {
@@ -177,7 +177,7 @@ export default class ChangedFiles {
     }
 
     const div = document.createElement('div');
-    div.setAttribute('id', 'diff-stat');
+    div.id = 'diff-stat';
 
     const textSpan = document.createElement('span');
     textSpan.classList.add('diff-text');
@@ -195,7 +195,7 @@ export default class ChangedFiles {
     return div;
   }
 
-  private createElement(node: IVirtualDOM, diffStats: IDiffStats) {
+  private createElement(node: IVirtualDOM, diffStats?: IDiffStats) {
     const element = document.createElement(node.type);
     const {
       id,
@@ -206,7 +206,7 @@ export default class ChangedFiles {
 
     const span = document.createElement('span');
 
-    span.setAttribute('id', id);
+    span.id = id;
     span.innerText = name;
     span.addEventListener('click', onClick);
 
@@ -217,15 +217,20 @@ export default class ChangedFiles {
       element.append(image, span, ul);
       element.classList.add('opened', 'folder');
     } else {
-      const image = getImageOfClosedFolder();
-      const diffStatElement = this.renderDiffStat(
+      const icon = document.createElement('i');
+      icon.setAttribute(
+        'class',
+        `icon ${fileIcons.getClassWithColor(name)}`
+      );
+
+      const diffStatElement = diffStats && this.renderDiffStat(
         diffStats[fullName]
       );
       span.classList.add('file-name');
 
       const appendingElements = diffStatElement
-        ? [span, image, diffStatElement]
-        : [span, image];
+        ? [icon, span, diffStatElement]
+        : [icon, span];
 
       element.append(...appendingElements);
     }
@@ -261,11 +266,9 @@ export default class ChangedFiles {
     });
 
     const rootElement = document.createElement('ul');
-    rootElement.setAttribute('id', 'pr-changed-files');
+    rootElement.id = 'pr-changed-files';
     rootElement.append(...elements);
 
     return rootElement;
   }
-
-  // diff stat optional 하게
 }

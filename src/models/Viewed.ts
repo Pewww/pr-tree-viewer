@@ -1,4 +1,12 @@
+import isEmpty from 'lodash.isempty';
+
 export default class Viewed {
+  private get checkBoxes() {
+    return Array.from(
+      document.getElementsByClassName('js-reviewed-checkbox')
+    ) as HTMLInputElement[];
+  }
+
   private controlBtnsClickable(target: HTMLButtonElement, isClickable: boolean) {
     Array.from(target.parentElement.children).forEach((btn: HTMLButtonElement) => {
       btn.disabled = !isClickable;
@@ -8,9 +16,7 @@ export default class Viewed {
   private hideAll(target: HTMLButtonElement) {
     this.controlBtnsClickable(target, false);
 
-    const checkBoxes = Array.from(
-      document.getElementsByClassName('js-reviewed-checkbox')
-    ) as HTMLInputElement[];
+    const checkBoxes = this.checkBoxes;
 
     const self = this;
     const maxLoop = checkBoxes.length;
@@ -37,9 +43,7 @@ export default class Viewed {
   private showAll(target: HTMLButtonElement) {
     this.controlBtnsClickable(target, false);
 
-    const checkBoxes = Array.from(
-      document.getElementsByClassName('js-reviewed-checkbox')
-    ) as HTMLInputElement[];
+    const checkBoxes = this.checkBoxes;
 
     const self = this;
     const maxLoop = checkBoxes.length;
@@ -66,7 +70,7 @@ export default class Viewed {
   private renderHideBtn() {
     const button = document.createElement('button');
 
-    button.innerText = "Hide all files"
+    button.innerText = "Hide all files";
     button.addEventListener('click', e => {
       this.hideAll(e.target as HTMLButtonElement);
     });
@@ -77,7 +81,7 @@ export default class Viewed {
   private renderShowBtn() {
     const button = document.createElement('button');
 
-    button.innerText = "Show all files"
+    button.innerText = "Show all files";
     button.addEventListener('click', e => {
       this.showAll(e.target as HTMLButtonElement);
     });
@@ -86,8 +90,12 @@ export default class Viewed {
   }
 
   public render() {
+    if (isEmpty(this.checkBoxes)) {
+      return null;
+    }
+
     const rootElement = document.createElement('div');
-    rootElement.setAttribute('id', 'viewed-btns-wrapper');
+    rootElement.id = 'viewed-btns-wrapper';
     rootElement.append(
       this.renderHideBtn(),
       this.renderShowBtn()
