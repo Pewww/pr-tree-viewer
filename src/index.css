@@ -3,11 +3,11 @@
 
 /* ----- PR-Tree-Viewer CSS ----- */
 #pr-tree-viewer-root {
-  width: 290px;
-  min-width: 290px;
+  width: 310px;
+  min-width: 310px;
   max-width: 700px;
-  height: 650px;
-  min-height: 650px;
+  height: 700px;
+  min-height: 700px;
   border: 1px solid #e1e4e8;
   border-radius: 6px;
   display: inline-block;
@@ -26,31 +26,23 @@
   margin-left: 5px;
 }
 
+#pr-tree-viewer-root ul, #pr-tree-viewer-root ul li {
+  list-style: none;
+}
+
 #pr-tree-viewer-root #pr-changed-files {
   font-size: 14px;
-  list-style: none;
 }
 
 #pr-tree-viewer-root #pr-changed-files ul {
-  padding-left: 15px;
-}
-
-#pr-tree-viewer-root #pr-changed-files ul li {
-  list-style: none;
+  padding-left: 16px;
 }
 
 #pr-tree-viewer-root #pr-changed-files img,
-#pr-tree-viewer-root #pr-changed-files span {
+#pr-tree-viewer-root #pr-changed-files span,
+#pr-tree-viewer-root #pr-changed-files i {
   vertical-align: middle;
   margin-left: 5px;
-}
-
-#pr-tree-viewer-root #pr-changed-files ul li.folder > img {
-  margin-left: 8px;
-}
-
-#pr-tree-viewer-root #pr-changed-files span.file-name {
-  margin-left: 12px;
 }
 
 #pr-tree-viewer-root #pr-changed-files img {
@@ -62,6 +54,10 @@
   text-decoration: underline;
 }
 
+#pr-tree-viewer-root #pr-changed-files .file-name {
+  margin-right: 8px;
+}
+
 #pr-tree-viewer-root #pr-changed-files #diff-stat {
   display: inline-block;
   vertical-align: middle;
@@ -71,7 +67,8 @@
 
 #pr-tree-viewer-root #pr-changed-files #diff-stat .diff-text {
   font-size: 12px;
-  padding-right: 3px;
+  padding-right: 4px;
+  margin-left: 0;
 }
 
 #pr-tree-viewer-root #pr-changed-files #diff-stat .stat-type {
@@ -116,4 +113,28 @@
 
 #pr-tree-viewer-root #viewed-btns-wrapper button:first-child {
   margin-right: 5px;
+}
+
+#pr-tree-viewer-root #diff-stat-show-setting {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#pr-tree-viewer-root #diff-stat-show-setting input,
+#pr-tree-viewer-root #diff-stat-show-setting span {
+  vertical-align: middle;
+}
+
+#pr-tree-viewer-root #diff-stat-show-setting span {
+  padding-left: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #353535;
+}
+
+#pr-tree-viewer-root #diff-stat-show-setting .seperate-line {
+  width: 100%;
+  height: 1px;
+  background-color: #e1e4e8;
+  margin-top: 12px;
 }
