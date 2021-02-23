@@ -50,6 +50,10 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
+          from: './logo.png',
+          to: './'
+        },
+        {
           from: './manifest.json',
           to: './'
         }

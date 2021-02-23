@@ -7,6 +7,9 @@
     "https://*/*",
     "http://*/*"
   ],
+  "icons": {
+    "128": "logo.png"
+  },
   "content_scripts": [
     {
       "run_at": "document_idle",
