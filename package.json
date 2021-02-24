@@ -1,6 +1,6 @@
 {
   "name": "pr-tree-viewer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "repository": "https://github.com/Pewww/pr-tree-viewer.git",
   "author": "pewww <jung22337@naver.com>",
