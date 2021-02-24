@@ -41,7 +41,7 @@ export default class ChangedFiles {
 
   private getFileSrcs() {
     const fileSrcTags = Array.from(
-      document.querySelectorAll(`.${this.rootClassName} a.link-gray-dark`)
+      document.querySelectorAll(`.${this.rootClassName} a`)
     );
 
     return fileSrcTags.map(({ title }: HTMLElement) =>
@@ -107,7 +107,7 @@ export default class ChangedFiles {
 
   private scrollToDestination(fullName: string) {
     const fileSrcTags = Array.from(
-      document.querySelectorAll(`.${this.rootClassName} a.link-gray-dark`)
+      document.querySelectorAll(`.${this.rootClassName} a`)
     ) as HTMLAnchorElement[];
     const targetIdx = fileSrcTags.findIndex(({ title }) =>
       title.endsWith(fullName)  
