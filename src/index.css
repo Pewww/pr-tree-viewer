@@ -1,10 +1,35 @@
 /* ----- file-icons-js CSS ----- */
 @import '~file-icons-js/css/style.css';
 
+/* ----- Github Page CSS ----- */
+.js-diff-progressive-container {
+  width: calc(100% - 360px);
+  float: right;
+  clear: right;
+  margin-left: 5px;
+}
+
+.protip {
+  float: right;
+  clear: right;
+}
+
+.js-diff-progressive-container.reset-container-style {
+  width: 100%;
+  margin-left: 0;
+  float: none;
+  clear: none;
+}
+
+.protip.reset-container-style {
+  float: none;
+  clear: none;
+}
+
 /* ----- PR-Tree-Viewer CSS ----- */
 #pr-tree-viewer-root {
-  width: 310px;
-  min-width: 310px;
+  width: 355px;
+  min-width: 355px;
   max-width: 700px;
   height: 650px;
   min-height: 500px;
@@ -21,21 +46,9 @@
   resize: both;
 }
 
-#pr-tree-viewer-root ~ .js-diff-progressive-container {
-  width: calc(100% - 300px);
-  float: right;
-  clear: right;
-  margin-left: 5px;
-}
-
 #pr-tree-viewer-root.is-pr-tree-viewer-stuck {
   position: fixed;
   top: 70px;
-}
-
-.protip {
-  float: right;
-  clear: right;
 }
 
 #pr-tree-viewer-root ul, #pr-tree-viewer-root ul li {
@@ -111,12 +124,24 @@
 
 #pr-tree-viewer-root #viewed-btns-wrapper button {
   border: 0;
-  padding: 8px 20px;
   border: 1px solid #e1e4e8;
   border-radius: 6px;
+  background-color: #fff;
+}
+
+#pr-tree-viewer-root #viewed-btns-wrapper button.viewed-btn {
+  padding: 8px 20px;
   color: #0c79f8;
   font-weight: 600;
-  background-color: #fff;
+}
+
+#pr-tree-viewer-root #viewed-btns-wrapper button.remove-btn {
+  padding: 8px 14px;
+  margin-left: 25px;
+}
+
+#pr-tree-viewer-root #viewed-btns-wrapper button.remove-btn img {
+  width: 10px;
 }
 
 #pr-tree-viewer-root #viewed-btns-wrapper button:disabled {

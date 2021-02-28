@@ -1,13 +1,11 @@
+import isEmpty from 'lodash.isempty';
+
+import PrTreeViewer from './PrTreeViewer';
 import { STORAGE_KEY } from '../constants/storage';
 
 export default class Option {
   private get checked() {
     return localStorage.getItem(STORAGE_KEY) === 'YES';
-  }
-
-  private get isTargetFilesExist() {
-    const diffContainer = document.querySelector('.js-diff-progressive-container');
-    return !!diffContainer;
   }
 
   private onClick(target: HTMLInputElement) {
@@ -18,7 +16,7 @@ export default class Option {
   }
 
   public render() {
-    if (!this.isTargetFilesExist) {
+    if (isEmpty(PrTreeViewer.diffContainerElements)) {
       return null;
     }
 

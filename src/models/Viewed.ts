@@ -1,6 +1,14 @@
 import isEmpty from 'lodash.isempty';
 
+import RemoveButton from './RemoveButton';
+
 export default class Viewed {
+  private removeButton: RemoveButton;
+
+  constructor() {
+    this.removeButton = new RemoveButton();
+  }
+
   private get checkBoxes() {
     return Array.from(
       document.getElementsByClassName('js-reviewed-checkbox')
@@ -70,7 +78,8 @@ export default class Viewed {
   private renderHideBtn() {
     const button = document.createElement('button');
 
-    button.innerText = "Hide all files";
+    button.innerText = 'Hide all files';
+    button.className = 'viewed-btn';
     button.addEventListener('click', e => {
       this.hideAll(e.target as HTMLButtonElement);
     });
@@ -81,7 +90,8 @@ export default class Viewed {
   private renderShowBtn() {
     const button = document.createElement('button');
 
-    button.innerText = "Show all files";
+    button.innerText = 'Show all files';
+    button.className = 'viewed-btn';
     button.addEventListener('click', e => {
       this.showAll(e.target as HTMLButtonElement);
     });
@@ -98,7 +108,8 @@ export default class Viewed {
     rootElement.id = 'viewed-btns-wrapper';
     rootElement.append(
       this.renderHideBtn(),
-      this.renderShowBtn()
+      this.renderShowBtn(),
+      this.removeButton.render()
     );
 
     return rootElement;
