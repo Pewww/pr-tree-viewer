@@ -1,9 +1,10 @@
-import isEmpty from 'lodash.isempty';
-
-import PrTreeViewer from './PrTreeViewer';
 import { STORAGE_KEY } from '../constants/storage';
 
 export default class Option {
+  private get filesBucketElement() {
+    return document.getElementById('files_bucket');
+  }
+
   private get checked() {
     return localStorage.getItem(STORAGE_KEY) === 'YES';
   }
@@ -16,7 +17,7 @@ export default class Option {
   }
 
   public render() {
-    if (isEmpty(PrTreeViewer.diffContainerElements)) {
+    if (!this.filesBucketElement) {
       return null;
     }
 

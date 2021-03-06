@@ -23,18 +23,20 @@ export default class PrTreeViewer {
     this.observeEventBus();
   }
 
-  public static get diffContainerElements() {
-    return Array.from(
-      document.getElementsByClassName('js-diff-progressive-container')
-    ) as HTMLElement[];
-  }
-
   private get rootElement() {
     return document.getElementById('pr-tree-viewer-root');
+  }
+  
+  private get filesElement() {
+    return document.getElementById('files');
   }
 
   private get filesBucketElement() {
     return document.getElementById('files_bucket');
+  }
+
+  private get prToolbarElement() {
+    return document.getElementsByClassName('pr-toolbar')[0] as HTMLElement;
   }
 
   private get renderedResult() {
@@ -45,28 +47,15 @@ export default class PrTreeViewer {
     ];
   }
 
-  private removeAll() {
-    const diffContainers = PrTreeViewer.diffContainerElements;
-    const protip = document.getElementsByClassName('protip')[0];
-
-    this.resetMutationObserver();
-    this.resetResizeObserver();
-
-    this.rootElement.remove();
-    diffContainers.forEach(diffContainer => {
-      diffContainer.removeAttribute('style');
-      diffContainer.classList.add('reset-container-style');
-    });
-    protip.classList.add('reset-container-style');
-  }
-
   private observeEventBus() {
     if (!this.filesBucketElement) {
       return;
     }
 
     const { unsubscribe } = $eventBus.on('remove', () => {
-      this.removeAll();
+      this.resetMutationObserver();
+      this.resetResizeObserver();
+
       unsubscribe();
     });
   }
@@ -75,35 +64,15 @@ export default class PrTreeViewer {
     return target.classList.contains('js-diff-progressive-container');
   }
 
-  private checkIsToolBarClassChanged(mutation: MutationRecord) {
-    return mutation.type === 'attributes'
-      && mutation.oldValue !== (mutation.target as HTMLElement).className;
-  }
-
-  private changeRootElementPosition(target: HTMLElement) {
-    const rootElement = this.rootElement;
-
-    if (target.classList.contains('is-stuck')) {
-      rootElement.classList.add('is-pr-tree-viewer-stuck');
-    } else {
-      rootElement.classList.remove('is-pr-tree-viewer-stuck');
-    }
-  }
-
   private setMutationObserver() {
     const filesBucketElement = this.filesBucketElement;
-    const prToolBar = document.getElementsByClassName('pr-toolbar')[0];
 
-    if (!filesBucketElement || !prToolBar) {
+    if (!filesBucketElement) {
       return;
     }
 
     this.mutationObserver = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
-        if (this.checkIsToolBarClassChanged(mutation)) {
-          this.changeRootElementPosition(mutation.target as HTMLElement);
-        }
-
         if (this.checkIsDiffContainer(mutation.target as HTMLElement)) {
           this.render();
         }
@@ -113,12 +82,6 @@ export default class PrTreeViewer {
     this.mutationObserver.observe(filesBucketElement, {
       childList: true,
       subtree: true
-    });
-
-    this.mutationObserver.observe(prToolBar, {
-      attributes: true,
-      attributeFilter: ['class'],
-      attributeOldValue: true
     });
   }
 
@@ -130,25 +93,23 @@ export default class PrTreeViewer {
     return target.getAttribute('id') === 'pr-tree-viewer-root';
   }
 
-  private setDiffContainersWidthAgain(size: readonly ResizeObserverSize[]) {
-    const diffContainers = PrTreeViewer.diffContainerElements;
+  private setFilesElementMarginAgain(size: readonly ResizeObserverSize[]) {
+    const filesElement = this.filesElement;
     const [{ inlineSize }] = size;
     const sizeBuffer = 5;
 
-    if (isEmpty(diffContainers)) {
+    if (!filesElement) {
       return;
     }
 
-    diffContainers.forEach(diffContainer => {
-      diffContainer.style.width = `calc(100% - ${inlineSize + sizeBuffer}px)`; 
-    });
+    filesElement.style.marginLeft = `${inlineSize + sizeBuffer}px`;
   }
 
   private setResizeObserver() {
     this.resizeObserver = new ResizeObserver(mutations => {
       mutations.forEach(mutation => {
         if (this.checkIsPrTreeViewerRoot(mutation.target as HTMLElement)) {
-          this.setDiffContainersWidthAgain(mutation.borderBoxSize);
+          this.setFilesElementMarginAgain(mutation.borderBoxSize);
         }
       });
     });
@@ -179,7 +140,7 @@ export default class PrTreeViewer {
 
       this.resizeObserver.observe(rootElement);
 
-      const locationTarget = document.getElementById('files');
+      const locationTarget = this.prToolbarElement;
       locationTarget.prepend(rootElement);
     }
   }

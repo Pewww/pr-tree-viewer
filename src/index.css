@@ -2,53 +2,30 @@
 @import '~file-icons-js/css/style.css';
 
 /* ----- Github Page CSS ----- */
-.js-diff-progressive-container {
-  width: calc(100% - 360px);
-  float: right;
-  clear: right;
-  margin-left: 5px;
-}
-
-.protip {
-  float: right;
-  clear: right;
-}
-
-.js-diff-progressive-container.reset-container-style {
-  width: 100%;
-  margin-left: 0;
-  float: none;
-  clear: none;
-}
-
-.protip.reset-container-style {
-  float: none;
-  clear: none;
+#files {
+  margin-left: 360px;
 }
 
 /* ----- PR-Tree-Viewer CSS ----- */
 #pr-tree-viewer-root {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 60px;
   width: 355px;
   min-width: 355px;
   max-width: 700px;
   height: 650px;
   min-height: 500px;
-  max-height: calc(100% - 190px);
+  max-height: calc(100vh - 180px);
   background-color: #fff;
   border: 1px solid #e1e4e8;
   border-radius: 6px;
-  display: inline-block;
-  vertical-align: top;
   box-sizing: border-box;
   padding: 15px;
   white-space: nowrap;
   overflow: auto;
   resize: both;
-}
-
-#pr-tree-viewer-root.is-pr-tree-viewer-stuck {
-  position: fixed;
-  top: 70px;
 }
 
 #pr-tree-viewer-root ul, #pr-tree-viewer-root ul li {
