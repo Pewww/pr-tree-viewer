@@ -3,12 +3,6 @@ import isEmpty from 'lodash.isempty';
 import RemoveButton from './RemoveButton';
 
 export default class Viewed {
-  private removeButton: RemoveButton;
-
-  constructor() {
-    this.removeButton = new RemoveButton();
-  }
-
   private get checkBoxes() {
     return Array.from(
       document.getElementsByClassName('js-reviewed-checkbox')
@@ -109,7 +103,7 @@ export default class Viewed {
     rootElement.append(
       this.renderHideBtn(),
       this.renderShowBtn(),
-      this.removeButton.render()
+      RemoveButton.render()
     );
 
     return rootElement;

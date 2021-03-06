@@ -1,11 +1,11 @@
 import $eventBus from './EventBus';
 
 export default class RemoveButton {
-  private onClick() {
+  private static onClick() {
     $eventBus.emit('remove', 'remove viewer element');
   }
 
-  public render() {
+  public static render() {
     const button = document.createElement('button');
     button.className='remove-btn';
     button.addEventListener('click', () => {
