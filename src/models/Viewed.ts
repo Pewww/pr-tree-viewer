@@ -13,7 +13,7 @@ export default class Viewed {
     });
   }
 
-  private hideAll(target: HTMLButtonElement) {
+  private toggle(isVisible: boolean, target: HTMLButtonElement) {
     this.controlBtnsClickable(target, false);
 
     const checkBoxes = this.checkBoxes;
@@ -31,35 +31,12 @@ export default class Viewed {
       }
 
       requestId = window.requestAnimationFrame(loop);
+
+      const checkCondition = isVisible
+        ? checkBoxes[idx].checked
+        : !checkBoxes[idx].checked;
       
-      if (!checkBoxes[idx].checked) {
-        checkBoxes[idx].click();
-      }
-
-      idx += 1;
-    })();
-  }
-
-  private showAll(target: HTMLButtonElement) {
-    this.controlBtnsClickable(target, false);
-
-    const checkBoxes = this.checkBoxes;
-
-    const self = this;
-    const maxLoop = checkBoxes.length;
-    let requestId = 0;
-    let idx = 0;
-
-    (function loop() {
-      if (idx >= maxLoop) {
-        window.cancelAnimationFrame(requestId);
-        self.controlBtnsClickable(target, true);
-        return;
-      }
-
-      requestId = window.requestAnimationFrame(loop);
-      
-      if (checkBoxes[idx].checked) {
+      if (checkCondition) {
         checkBoxes[idx].click();
       }
 
@@ -72,7 +49,7 @@ export default class Viewed {
 
     button.innerText = 'Hide all files';
     button.addEventListener('click', e => {
-      this.hideAll(e.target as HTMLButtonElement);
+      this.toggle(false, e.target as HTMLButtonElement);
     });
 
     return button;
@@ -83,7 +60,7 @@ export default class Viewed {
 
     button.innerText = 'Show all files';
     button.addEventListener('click', e => {
-      this.showAll(e.target as HTMLButtonElement);
+      this.toggle(true, e.target as HTMLButtonElement);
     });
 
     return button;
