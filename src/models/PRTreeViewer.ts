@@ -37,7 +37,7 @@ export default class PrTreeViewer {
 
   private get commitElement() {
     // 커밋 로그 접속 시의 엘리먼트(스타일 수정용)
-    return document.getElementsByClassName('commit')[0] as HTMLElement;
+    return document.querySelector('#files_bucket > .commit') as HTMLElement;
   }
 
   private get filesBucketElement() {
