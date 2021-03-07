@@ -1,13 +1,21 @@
 import $eventBus from './EventBus';
 
 export default class RemoveButton {
-  private static onClick() {
+  private get filesBucketElement() {
+    return document.getElementById('files_bucket');
+  }
+
+  private onClick() {
     $eventBus.emit('remove', 'remove viewer element');
   }
 
-  public static render() {
+  public render() {
+    if (!this.filesBucketElement) {
+      return null;
+    }
+
     const button = document.createElement('button');
-    button.className='remove-btn';
+    button.className = 'remove-btn';
     button.addEventListener('click', () => {
       this.onClick();
     });

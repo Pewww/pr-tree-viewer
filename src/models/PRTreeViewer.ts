@@ -4,12 +4,14 @@ import compact from 'lodash.compact';
 import ChangedFiles from './ChangedFiles';
 import Viewed from './Viewed';
 import Option from './Option';
+import RemoveButton from './RemoveButton';
 import $eventBus from './EventBus';
 
 export default class PrTreeViewer {
   private changedFiles: ChangedFiles;
   private viewed: Viewed;
   private option: Option;
+  private removeButton: RemoveButton;
   private mutationObserver: MutationObserver;
   private resizeObserver: ResizeObserver;
 
@@ -17,6 +19,7 @@ export default class PrTreeViewer {
     this.changedFiles = new ChangedFiles();
     this.viewed = new Viewed();
     this.option = new Option();
+    this.removeButton = new RemoveButton();
 
     this.setMutationObserver();
     this.setResizeObserver();
@@ -46,6 +49,7 @@ export default class PrTreeViewer {
   private get renderedResult() {
     return [
       this.viewed.render(),
+      this.removeButton.render(),
       this.option.render(),
       this.changedFiles.render()
     ];

@@ -51,6 +51,13 @@
   width: 14px;
 }
 
+#pr-tree-viewer-root button {
+  border: 0;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
 #pr-tree-viewer-root #pr-changed-files span:hover {
   cursor: pointer;
   text-decoration: underline;
@@ -93,32 +100,26 @@
   background-color: #d1d5da;
 }
 
+#pr-tree-viewer-root .remove-btn {
+  position: absolute;
+  right: 25px;
+  padding: 8px 14px;
+}
+
+#pr-tree-viewer-root .remove-btn img {
+  width: 10px;
+}
+
 #pr-tree-viewer-root #viewed-btns-wrapper {
   width: 100%;
   text-align: center;
-  margin-bottom: 10px;
+  margin-left: -25px;
 }
 
 #pr-tree-viewer-root #viewed-btns-wrapper button {
-  border: 0;
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
-  background-color: #fff;
-}
-
-#pr-tree-viewer-root #viewed-btns-wrapper button.viewed-btn {
   padding: 8px 20px;
   color: #0c79f8;
   font-weight: 600;
-}
-
-#pr-tree-viewer-root #viewed-btns-wrapper button.remove-btn {
-  padding: 8px 14px;
-  margin-left: 25px;
-}
-
-#pr-tree-viewer-root #viewed-btns-wrapper button.remove-btn img {
-  width: 10px;
 }
 
 #pr-tree-viewer-root #viewed-btns-wrapper button:disabled {
@@ -131,7 +132,7 @@
 
 #pr-tree-viewer-root #diff-stat-show-setting {
   text-align: center;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
 #pr-tree-viewer-root #diff-stat-show-setting input,
