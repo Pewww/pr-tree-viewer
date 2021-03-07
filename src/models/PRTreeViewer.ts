@@ -31,12 +31,16 @@ export default class PrTreeViewer {
     return document.getElementById('files');
   }
 
+  private get commitElement() {
+    return document.getElementsByClassName('commit')[0] as HTMLElement;
+  }
+
   private get filesBucketElement() {
     return document.getElementById('files_bucket');
   }
 
-  private get prToolbarElement() {
-    return document.getElementsByClassName('pr-toolbar')[0] as HTMLElement;
+  private get diffbarElement() {
+    return document.getElementsByClassName('diffbar')[0] as HTMLElement;
   }
 
   private get renderedResult() {
@@ -47,16 +51,21 @@ export default class PrTreeViewer {
     ];
   }
 
+  private removeExtension() {
+    this.resetMutationObserver();
+    this.resetResizeObserver();
+
+    this.rootElement.remove();
+    this.setInterlockedElementsMarginAgain(0);
+  }
+
   private observeEventBus() {
     if (!this.filesBucketElement) {
       return;
     }
 
-    const { unsubscribe } = $eventBus.on('remove', () => {
-      this.resetMutationObserver();
-      this.resetResizeObserver();
-
-      unsubscribe();
+    $eventBus.on('remove', () => {
+      this.removeExtension();
     });
   }
 
@@ -93,23 +102,35 @@ export default class PrTreeViewer {
     return target.getAttribute('id') === 'pr-tree-viewer-root';
   }
 
-  private setFilesElementMarginAgain(size: readonly ResizeObserverSize[]) {
+  private setInterlockedElementsMarginAgain(size: number) {
     const filesElement = this.filesElement;
-    const [{ inlineSize }] = size;
-    const sizeBuffer = 5;
+    const commitElement = this.commitElement;
 
     if (!filesElement) {
       return;
     }
 
-    filesElement.style.marginLeft = `${inlineSize + sizeBuffer}px`;
+    filesElement.style.marginLeft = `${size}px`;
+
+    if (commitElement) {
+      commitElement.style.marginLeft = `${size}px`;
+    }
+  }
+
+  private calculateMarginOfResizedElement(size: readonly ResizeObserverSize[]) {
+    const [{ inlineSize }] = size;
+    const sizeBuffer = 5;
+
+    return inlineSize + sizeBuffer;
   }
 
   private setResizeObserver() {
     this.resizeObserver = new ResizeObserver(mutations => {
       mutations.forEach(mutation => {
         if (this.checkIsPrTreeViewerRoot(mutation.target as HTMLElement)) {
-          this.setFilesElementMarginAgain(mutation.borderBoxSize);
+          this.setInterlockedElementsMarginAgain(
+            this.calculateMarginOfResizedElement(mutation.borderBoxSize)
+          );
         }
       });
     });
@@ -140,8 +161,8 @@ export default class PrTreeViewer {
 
       this.resizeObserver.observe(rootElement);
 
-      const locationTarget = this.prToolbarElement;
-      locationTarget.prepend(rootElement);
+      const locationTarget = this.diffbarElement;
+      locationTarget.insertAdjacentElement('afterend', rootElement);
     }
   }
 }

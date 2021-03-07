@@ -35,6 +35,15 @@ class EventBus {
     };
   }
 
+  public off(type?: string) {
+    if (type && !isEmpty(this.subscriptions[type])) {
+      this.subscriptions[type] = {};
+      return;
+    }
+
+    this.subscriptions = {};
+  }
+
   public emit<ArgType>(type: string, arg: ArgType) {
     if (!this.subscriptions[type]) {
       return;

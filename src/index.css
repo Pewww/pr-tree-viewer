@@ -2,7 +2,7 @@
 @import '~file-icons-js/css/style.css';
 
 /* ----- Github Page CSS ----- */
-#files {
+#files, .commit {
   margin-left: 375px;
 }
 
@@ -14,7 +14,7 @@
   top: 60px;
   width: 370px;
   min-width: 370px;
-  max-width: 700px;
+  max-width: 640px;
   height: 650px;
   min-height: 500px;
   max-height: calc(100vh - 180px);
