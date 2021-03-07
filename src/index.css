@@ -16,7 +16,7 @@
   min-width: 370px;
   max-width: 640px;
   height: 650px;
-  min-height: 500px;
+  min-height: 200px;
   max-height: calc(100vh - 180px);
   background-color: #fff;
   border: 1px solid #e1e4e8;
