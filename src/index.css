@@ -2,7 +2,7 @@
 @import '~file-icons-js/css/style.css';
 
 /* ----- Github Page CSS ----- */
-#files, .commit {
+#files_bucket > #files, .commit {
   margin-left: 375px;
 }
 

@@ -31,18 +31,22 @@ export default class PrTreeViewer {
   }
   
   private get filesElement() {
-    return document.getElementById('files');
+    // PR 파일들을 감싸는 Wrapper 엘리먼트(스타일 수정용)
+    return document.querySelector('#files_bucket > #files') as HTMLElement;
   }
 
   private get commitElement() {
+    // 커밋 로그 접속 시의 엘리먼트(스타일 수정용)
     return document.getElementsByClassName('commit')[0] as HTMLElement;
   }
 
   private get filesBucketElement() {
+    // PR 파일들이 추가되는지 탐지하는 대상
     return document.getElementById('files_bucket');
   }
 
   private get diffbarElement() {
+    // 익스텐션이 추가되는 대상(기준점)
     return document.getElementsByClassName('diffbar')[0] as HTMLElement;
   }
 
@@ -147,7 +151,9 @@ export default class PrTreeViewer {
   public render() {
     const renderedResult = compact(this.renderedResult);
 
-    if (isEmpty(renderedResult)) {
+    // 렌더링되는 대상의 모델들은 각각의 렌더링 조건을 가진다.
+    // 다만, files_bucket 바로 하위의 files 엘리먼트가 존재하지 않는 경우 렌더링을 강제로 무시한다.
+    if (isEmpty(renderedResult) || !this.filesElement) {
       return;
     }
 
