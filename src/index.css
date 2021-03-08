@@ -6,6 +6,10 @@
   margin-left: 375px;
 }
 
+#files_bucket > .pr-toolbar.is-stuck #pr-tree-viewer-root {
+  top: 70px;
+}
+
 /* ----- PR-Tree-Viewer CSS ----- */
 #pr-tree-viewer-root {
   position: absolute;
