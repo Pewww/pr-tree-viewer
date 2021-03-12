@@ -1,4 +1,5 @@
 import $eventBus from './EventBus';
+import { isDarkMode } from '../lib/mode';
 
 export default class RemoveButton {
   private get filesBucketElement() {
@@ -21,7 +22,11 @@ export default class RemoveButton {
     });
 
     const img = new Image();
-    img.src = require('../assets/icons/close.svg');
+    const src = isDarkMode()
+      ? require('../assets/icons/close-in-dark-mode.svg')
+      : require('../assets/icons/close.svg');
+
+    img.src = src;
 
     button.appendChild(img);
 

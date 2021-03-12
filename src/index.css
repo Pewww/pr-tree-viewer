@@ -22,7 +22,7 @@
   height: 650px;
   min-height: 200px;
   max-height: calc(100vh - 190px);
-  background-color: #fff;
+  background-color: transparent;
   border: 1px solid #e1e4e8;
   border-radius: 6px;
   box-sizing: border-box;
@@ -59,7 +59,7 @@
   border: 0;
   border: 1px solid #e1e4e8;
   border-radius: 6px;
-  background-color: #fff;
+  background-color: transparent;
 }
 
 #pr-tree-viewer-root #pr-changed-files span:hover {
@@ -156,4 +156,29 @@
   height: 1px;
   background-color: #e1e4e8;
   margin-top: 12px;
+}
+
+/* ----- PR-Tree-Viewer CSS in Github Dark Mode ----- */
+#pr-tree-viewer-root.dark-mode {
+  border-color: #30363d;
+}
+
+#pr-tree-viewer-root.dark-mode button {
+  border-color: #30363d;
+}
+
+#pr-tree-viewer-root.dark-mode #viewed-btns-wrapper button {
+  color: #58a6ff;
+}
+
+#pr-tree-viewer-root.dark-mode #diff-stat-show-setting .seperate-line {
+  background-color: #30363d;
+}
+
+#pr-tree-viewer-root.dark-mode #diff-stat-show-setting span {
+  color: #c9d1d9;
+}
+
+#pr-tree-viewer-root.dark-mode #diff-stat-show-setting input[type=checkbox]:checked {
+  filter: grayscale(1);
 }
