@@ -6,6 +6,7 @@ import Viewed from './Viewed';
 import Option from './Option';
 import RemoveButton from './RemoveButton';
 import $eventBus from './EventBus';
+import { isDarkMode } from '../lib/mode';
 
 export default class PrTreeViewer {
   private changedFiles: ChangedFiles;
@@ -160,6 +161,10 @@ export default class PrTreeViewer {
     if (this.rootElement) {
       const rootElement = this.rootElement;
 
+      if (isDarkMode()) {
+        rootElement.classList.add('dark-mode');
+      }
+
       this.resizeObserver.observe(rootElement);
 
       // @ts-ignore
@@ -168,6 +173,10 @@ export default class PrTreeViewer {
       const rootElement = document.createElement('div');
       rootElement.id = 'pr-tree-viewer-root';
       rootElement.append(...renderedResult);
+
+      if (isDarkMode()) {
+        rootElement.classList.add('dark-mode');
+      }
 
       this.resizeObserver.observe(rootElement);
 

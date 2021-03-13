@@ -10,4 +10,10 @@ This extension provides the ability to view changed files in a tree structure, o
 
 > :warning: **There are too many files in here!**: Recommend to check other PR targets.
 
-![Example](https://user-images.githubusercontent.com/23455736/110234817-f137de80-7f6f-11eb-8c7a-dcfbf892c99a.png)
+<img width="1000" alt="screen" src="https://user-images.githubusercontent.com/23455736/110234817-f137de80-7f6f-11eb-8c7a-dcfbf892c99a.png">
+
+<br>
+
+**In Github Dark Mode**
+
+<img width="1000" alt="dark-mode-screen" src="https://user-images.githubusercontent.com/23455736/110913554-ab588d00-8358-11eb-9712-6294a406e87d.png">
