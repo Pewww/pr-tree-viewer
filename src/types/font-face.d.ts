@@ -14,7 +14,11 @@ declare global {
   type FontFaceSetStatus = 'loading' | 'loaded';
 
   interface FontFace extends FontFaceDescriptors {
-    new(family: string, source: string | ArrayBuffer, descriptors?: FontFaceDescriptors): FontFace;
+    new (
+      family: string,
+      source: string | ArrayBuffer,
+      descriptors?: FontFaceDescriptors
+    ): FontFace;
     readonly status: FontFaceLoadStatus;
     readonly loaded: Promise<FontFace>;
     variationSettings: CSSOMString;
@@ -36,7 +40,7 @@ declare global {
     readonly status: FontFaceSetStatus;
     readonly ready: Promise<FontFaceSet>;
     add(font: FontFace): void;
-    check(font: string, text?: string): Boolean; // throws exception
+    check(font: string, text?: string): boolean; // throws exception
     load(font: string, text?: string): Promise<FontFace[]>;
     delete(font: FontFace): void;
     clear(): void;

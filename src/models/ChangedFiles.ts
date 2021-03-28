@@ -17,7 +17,7 @@ interface IVirtualDOM {
     fullName: string;
     id: string;
     onClick: (e: MouseEvent) => void;
-  },
+  };
   children: IVirtualDOM[];
 }
 
@@ -45,19 +45,14 @@ export default class ChangedFiles {
     );
 
     return fileSrcTags.map(({ title }: HTMLElement) =>
-      title.includes('→')
-        ? title.split('→')[1].trim()
-        : title
-      );
+      title.includes('→') ? title.split('→')[1].trim() : title
+    );
   }
 
   private filterToCustomDiffStat(diffStatTag: HTMLElement) {
-    const changed = parseInt(
-      diffStatTag.innerText.replace(/,/g, ''),
-      10
-    );
-    const types = Array.from(diffStatTag.children).map(diffStat =>
-      CustomDiffStatType[diffStat.classList.value]
+    const changed = parseInt(diffStatTag.innerText.replace(/,/g, ''), 10);
+    const types = Array.from(diffStatTag.children).map(
+      diffStat => CustomDiffStatType[diffStat.classList.value]
     );
 
     return {
@@ -101,7 +96,8 @@ export default class ChangedFiles {
       clickedElement.previousElementSibling.replaceWith(
         getImageOfOpenedFolder()
       );
-      (clickedElement.nextElementSibling as HTMLElement).style.display = 'block';
+      (clickedElement.nextElementSibling as HTMLElement).style.display =
+        'block';
     }
   }
 
@@ -110,7 +106,7 @@ export default class ChangedFiles {
       document.querySelectorAll(`.${this.rootClassName} > a`)
     ) as HTMLAnchorElement[];
     const targetIdx = fileSrcTags.findIndex(({ title }) =>
-      title.endsWith(fullName)  
+      title.endsWith(fullName)
     );
 
     if (targetIdx === -1) {
@@ -128,7 +124,7 @@ export default class ChangedFiles {
     }
 
     next[currVal] = {
-      ...next[currVal],
+      ...next[currVal]
     };
 
     this.createNestedLayer(arr, idx + 1, next[currVal]);
@@ -141,9 +137,7 @@ export default class ChangedFiles {
 
     return Object.keys(target).map(key => {
       const id = getRandomId();
-      const fullName = parentName
-        ? `${parentName}/${key}`
-        : key;
+      const fullName = parentName ? `${parentName}/${key}` : key;
 
       return {
         type: 'li',
@@ -156,22 +150,16 @@ export default class ChangedFiles {
             isEmpty(target[key])
               ? this.scrollToDestination(fullName)
               : this.toggle(id);
-          },
+          }
         },
-        children: this.createVirtualDOM(
-          target[key],
-          fullName
-        )
+        children: this.createVirtualDOM(target[key], fullName)
       };
     });
   }
-  
+
   private renderDiffStat(diffStat: IDiffStat) {
-    const {
-      changed,
-      types
-    } = diffStat;
-    
+    const { changed, types } = diffStat;
+
     if (Number.isNaN(changed) || types.includes(undefined)) {
       return;
     }
@@ -197,12 +185,7 @@ export default class ChangedFiles {
 
   private createElement(node: IVirtualDOM, diffStats?: IDiffStats) {
     const element = document.createElement(node.type);
-    const {
-      id,
-      name,
-      onClick,
-      fullName
-    } = node.props;
+    const { id, name, onClick, fullName } = node.props;
 
     const span = document.createElement('span');
 
@@ -218,14 +201,10 @@ export default class ChangedFiles {
       element.classList.add('opened', 'folder');
     } else {
       const icon = document.createElement('i');
-      icon.setAttribute(
-        'class',
-        `icon ${fileIcons.getClassWithColor(name)}`
-      );
+      icon.setAttribute('class', `icon ${fileIcons.getClassWithColor(name)}`);
 
-      const diffStatElement = diffStats && this.renderDiffStat(
-        diffStats[fullName]
-      );
+      const diffStatElement =
+        diffStats && this.renderDiffStat(diffStats[fullName]);
       span.classList.add('file-name');
 
       const appendingElements = diffStatElement
@@ -246,7 +225,7 @@ export default class ChangedFiles {
 
   public render() {
     const fileSrcs = this.getFileSrcs();
-    
+
     if (isEmpty(fileSrcs)) {
       return null;
     }

@@ -10,10 +10,7 @@ export default class Option {
   }
 
   private onClick(target: HTMLInputElement) {
-    localStorage.setItem(STORAGE_KEY, target.checked
-      ? 'YES'
-      : 'NO'
-    );
+    localStorage.setItem(STORAGE_KEY, target.checked ? 'YES' : 'NO');
   }
 
   public render() {
@@ -28,7 +25,7 @@ export default class Option {
     label.setAttribute('for', 'diff-stat-show');
 
     const input = document.createElement('input');
-    input.type = 'checkbox'
+    input.type = 'checkbox';
     input.id = 'diff-stat-show';
     input.checked = this.checked;
     input.addEventListener('click', e => {

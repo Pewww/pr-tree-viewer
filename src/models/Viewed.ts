@@ -7,10 +7,15 @@ export default class Viewed {
     ) as HTMLInputElement[];
   }
 
-  private controlBtnsClickable(target: HTMLButtonElement, isClickable: boolean) {
-    Array.from(target.parentElement.children).forEach((btn: HTMLButtonElement) => {
-      btn.disabled = !isClickable;
-    });
+  private controlBtnsClickable(
+    target: HTMLButtonElement,
+    isClickable: boolean
+  ) {
+    Array.from(target.parentElement.children).forEach(
+      (btn: HTMLButtonElement) => {
+        btn.disabled = !isClickable;
+      }
+    );
   }
 
   private toggle(isVisible: boolean, target: HTMLButtonElement) {
@@ -35,7 +40,7 @@ export default class Viewed {
       const checkCondition = isVisible
         ? checkBoxes[idx].checked
         : !checkBoxes[idx].checked;
-      
+
       if (checkCondition) {
         checkBoxes[idx].click();
       }
@@ -73,10 +78,7 @@ export default class Viewed {
 
     const rootElement = document.createElement('div');
     rootElement.id = 'viewed-btns-wrapper';
-    rootElement.append(
-      this.renderHideBtn(),
-      this.renderShowBtn()
-    );
+    rootElement.append(this.renderHideBtn(), this.renderShowBtn());
 
     return rootElement;
   }
