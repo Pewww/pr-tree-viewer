@@ -1,0 +1,43 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "prettier"
+  ],
+  "extends": [
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-duplicate-imports": "error",
+    "import/export": "error",
+    "@typescript-eslint/no-unused-vars": ["warn", {
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/no-empty-function": "warn",
+    "@typescript-eslint/no-empty-interface": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-misused-new": "off",
+    "@typescript-eslint/no-this-alias": [
+      "error",
+      {
+        "allowDestructuring": true,
+        "allowedNames": ["self"]
+      }
+    ]
+  }
+}
