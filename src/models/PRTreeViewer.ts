@@ -30,7 +30,7 @@ export default class PrTreeViewer {
   private get rootElement() {
     return document.getElementById('pr-tree-viewer-root');
   }
-  
+
   private get filesElement() {
     // PR 파일들을 감싸는 Wrapper 엘리먼트(스타일 수정용)
     return document.querySelector('#files_bucket > #files') as HTMLElement;

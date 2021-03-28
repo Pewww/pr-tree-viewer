@@ -49,10 +49,9 @@ class EventBus {
       return;
     }
 
-    Object.keys(this.subscriptions[type])
-      .forEach(id => {
-        this.subscriptions[type][id](arg);
-      });
+    Object.keys(this.subscriptions[type]).forEach(id => {
+      this.subscriptions[type][id](arg);
+    });
   }
 }
 
