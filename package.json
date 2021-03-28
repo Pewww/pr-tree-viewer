@@ -6,7 +6,8 @@
   "author": "pewww <jung22337@naver.com>",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "format:ts": "prettier './src/**/*.ts' --write"
   },
   "dependencies": {
     "copy-webpack-plugin": "^7.0.0",
@@ -27,6 +28,7 @@
     "@types/chrome": "^0.0.132",
     "@types/lodash.compact": "^3.0.6",
     "@types/lodash.isempty": "^4.4.6",
-    "@types/resize-observer-browser": "^0.1.5"
+    "@types/resize-observer-browser": "^0.1.5",
+    "prettier": "^2.2.1"
   }
 }
