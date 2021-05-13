@@ -19,7 +19,7 @@
   width: 370px;
   min-width: 370px;
   max-width: 640px;
-  height: 650px;
+  height: auto;
   min-height: 200px;
   max-height: calc(100vh - 190px);
   background-color: transparent;
