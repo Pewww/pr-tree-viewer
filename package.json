@@ -7,9 +7,9 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
-    "format": "prettier './src/**/*.ts' --write",
-    "lint": "eslint './src/**/*.ts'",
-    "lint:fix": "eslint --fix './src/**/*.ts'"
+    "format": "prettier ./src/**/*.ts --write",
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "eslint --fix ./src/**/*.ts"
   },
   "dependencies": {
     "copy-webpack-plugin": "^7.0.0",
