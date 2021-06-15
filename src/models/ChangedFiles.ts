@@ -6,9 +6,7 @@ import { getImageOfOpenedFolder, getImageOfClosedFolder } from '../lib/image';
 import { CustomDiffStatType } from '../enums/DiffStat';
 import { STORAGE_KEY } from '../constants/storage';
 
-interface IRoot {
-  [key: string]: any;
-}
+type TRoot = Record<string, any>;
 
 interface IVirtualDOM {
   type: string;
@@ -26,12 +24,10 @@ interface IDiffStat {
   types: string[];
 }
 
-interface IDiffStats {
-  [key: string]: IDiffStat;
-}
+type TDiffStats = Record<string, IDiffStat>;
 
 export default class ChangedFiles {
-  private root: IRoot;
+  private root: TRoot;
   private rootClassName: string;
 
   constructor() {
@@ -116,7 +112,7 @@ export default class ChangedFiles {
     location.href = fileSrcTags[targetIdx].href;
   }
 
-  private createNestedLayer(arr: string[], idx: number, next: IRoot) {
+  private createNestedLayer(arr: string[], idx: number, next: TRoot) {
     const currVal = arr[idx];
 
     if (!currVal) {
@@ -130,7 +126,7 @@ export default class ChangedFiles {
     this.createNestedLayer(arr, idx + 1, next[currVal]);
   }
 
-  private createVirtualDOM(target: IRoot, parentName: string) {
+  private createVirtualDOM(target: TRoot, parentName: string) {
     if (isEmpty(target)) {
       return;
     }
@@ -183,7 +179,7 @@ export default class ChangedFiles {
     return div;
   }
 
-  private createElement(node: IVirtualDOM, diffStats?: IDiffStats) {
+  private createElement(node: IVirtualDOM, diffStats?: TDiffStats) {
     const element = document.createElement(node.type);
     const { id, name, onClick, fullName } = node.props;
 
