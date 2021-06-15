@@ -6,9 +6,9 @@ This extension provides the ability to view changed files in a tree structure, o
 **Site**: [https://chrome.google.com/webstore/detail/pr-tree-viewer](https://chrome.google.com/webstore/detail/pr-tree-viewer/oohjmbbehcipaomlpikccfgncaknhenp?hl=ko)
 
 ### Screen
-**Example**: [https://github.com/Turfjs/turf/pull/1432/files](https://github.com/Turfjs/turf/pull/1432/files)
+**Example**: [https://github.com/facebook/react/pull/20463/files](https://github.com/facebook/react/pull/20463/files)
 
-> :warning: **There are too many files in here!**: Recommend to check other PR targets.
+> :information_source: Photos posted on README are different from the actual example link.
 
 <img width="1000" alt="screen" src="https://user-images.githubusercontent.com/23455736/110234817-f137de80-7f6f-11eb-8c7a-dcfbf892c99a.png">
 
