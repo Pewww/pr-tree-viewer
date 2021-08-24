@@ -1,12 +1,14 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: './src/index.ts'
+    index: './src/index.ts',
+    background: './src/background.ts'
   },
   output: {
-    filename: 'index.js',
+    filename: '[name].js',
     path: path.join(__dirname + '/dist')
   },
   resolve: {
@@ -58,6 +60,7 @@ module.exports = {
           to: './'
         }
       ]
-    })
+    }),
+    new CleanWebpackPlugin()
   ]
 };
