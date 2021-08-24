@@ -4,6 +4,8 @@
   "manifest_version": 2,
   "description": "PR의 변경된 파일들을 트리 구조로 볼 수 있도록 도와주는 크롬 익스텐션",
   "permissions": [
+    "tabs",
+    "activeTab",
     "https://*/*",
     "http://*/*"
   ],
@@ -21,5 +23,8 @@
       ]
     }
   ],
+  "background": {
+    "scripts": ["background.js"]
+  },
   "web_accessible_resources": ["*.woff2"]
 }

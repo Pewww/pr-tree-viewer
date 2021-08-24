@@ -11,12 +11,7 @@ const start = () => {
   prTreeViewer.render();
 };
 
-const pjaxContainer = document.querySelector('[data-pjax-container]');
-const rootMutationObserver = new MutationObserver(start);
-
-rootMutationObserver.observe(pjaxContainer, {
-  childList: true
+chrome.runtime.onMessage.addListener(() => {
+  start();
+  loadFonts();
 });
-
-start();
-loadFonts();
