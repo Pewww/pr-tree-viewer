@@ -1,4 +1,4 @@
-export const woff2Fonts = [
+export const Woff2Fonts = [
   {
     name: 'FontAwesome',
     fileName: 'fontawesome.woff2'
