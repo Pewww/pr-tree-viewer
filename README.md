@@ -17,3 +17,9 @@ This extension provides the ability to view changed files in a tree structure, o
 **In Github Dark Mode**
 
 <img width="1000" alt="dark-mode-screen" src="https://user-images.githubusercontent.com/23455736/110913554-ab588d00-8358-11eb-9712-6294a406e87d.png">
+
+<br>
+
+**In Github Dark-Dimmed Mode**
+
+<img width="1000" alt="dark-dimmed-mode-screen" src="https://user-images.githubusercontent.com/23455736/131213219-b334a705-d24d-4aec-9f4f-0e8c4d783c02.png">
