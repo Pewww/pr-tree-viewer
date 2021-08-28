@@ -159,6 +159,12 @@
   margin-top: 12px;
 }
 
+/* ----- PR-Tree-Viewer Common CSS in Github Dark/Dark Dimmed Mode ----- */
+#pr-tree-viewer-root.dark-mode #diff-stat-show-setting input[type=checkbox]:checked,
+#pr-tree-viewer-root.dark-dimmed-mode #diff-stat-show-setting input[type=checkbox]:checked {
+  filter: grayscale(1);
+}
+
 /* ----- PR-Tree-Viewer CSS in Github Dark Mode ----- */
 #pr-tree-viewer-root.dark-mode {
   border-color: #30363d;
@@ -180,6 +186,23 @@
   color: #c9d1d9;
 }
 
-#pr-tree-viewer-root.dark-mode #diff-stat-show-setting input[type=checkbox]:checked {
-  filter: grayscale(1);
+/* ----- PR-Tree-Viewer CSS in Github Dark Dimmed Mode ----- */
+#pr-tree-viewer-root.dark-dimmed-mode {
+  border-color: #444c56;
+}
+
+#pr-tree-viewer-root.dark-dimmed-mode button {
+  border-color: #444c56;
+}
+
+#pr-tree-viewer-root.dark-dimmed-mode #viewed-btns-wrapper button {
+  color: #539bf5;
+}
+
+#pr-tree-viewer-root.dark-dimmed-mode #diff-stat-show-setting .seperate-line {
+  background-color: #444c56;
+}
+
+#pr-tree-viewer-root.dark-dimmed-mode #diff-stat-show-setting span {
+  color: #adbac7;
 }
