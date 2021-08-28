@@ -5,13 +5,39 @@ const Themes = {
 };
 
 export const checkTheme = () => {
-  const isSystemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const dataColorMode = document.documentElement.getAttribute('data-color-mode');
+  let theme;
 
-  const themeAttribute = document.documentElement.getAttribute(
-    isSystemDarkMode
-      ? 'data-dark-theme'
-      : 'data-light-theme'
-  );
+  switch(dataColorMode) {
+    // Sync with system
+    case 'auto': {
+      const isSystemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  return Themes[themeAttribute];
+      const themeAttribute = document.documentElement.getAttribute(
+        isSystemDarkMode
+          ? 'data-dark-theme'
+          : 'data-light-theme'
+      );
+
+      theme = Themes[themeAttribute];
+
+      break;
+    };
+    // Single theme - light
+    case 'light': {
+      theme = 'light';
+
+      break;
+    };
+    // Single theme - dark, dark_dimmed
+    case 'dark': {
+      const themeAttribute = document.documentElement.getAttribute('data-dark-theme');
+
+      theme = Themes[themeAttribute];
+
+      break;
+    };
+  }
+  
+  return theme;
 };
