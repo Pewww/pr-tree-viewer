@@ -24,7 +24,9 @@ interface IDiffStat {
   types: string[];
 }
 
-type TDiffStats = Record<string, IDiffStat>;
+interface IDeletedInfo {
+  isDeleted: boolean;
+}
 
 export default class ChangedFiles {
   private root: TRoot;
@@ -78,6 +80,21 @@ export default class ChangedFiles {
     return customDiffStats;
   }
 
+  private getDeletedInfoOfFiles(fileSrs: string[]) {
+    const fileTags = Array.from(document.getElementsByClassName('file'));
+    const deletedInfo = {};
+
+    fileSrs.forEach((src, index) => {
+      const isDeleted = fileTags[index].getAttribute('data-file-deleted');
+
+      deletedInfo[src] = {
+        isDeleted: isDeleted === 'true'
+      };
+    });
+
+    return deletedInfo;
+  }
+
   private toggle(id: string) {
     const clickedElement = document.getElementById(id);
 
@@ -99,7 +116,7 @@ export default class ChangedFiles {
 
   private scrollToDestination(fullName: string) {
     const fileSrcTags = Array.from(
-      document.querySelectorAll(`.${this.rootClassName} > a`)
+      document.querySelectorAll(`.${this.rootClassName} > .diffstat + a`)
     ) as HTMLAnchorElement[];
     const targetIdx = fileSrcTags.findIndex(({ title }) =>
       title.endsWith(fullName)
@@ -179,7 +196,11 @@ export default class ChangedFiles {
     return div;
   }
 
-  private createElement(node: IVirtualDOM, diffStats?: TDiffStats) {
+  private createElement(
+    node: IVirtualDOM,
+    deletedInfo: Record<string, IDeletedInfo>,
+    diffStats?: Record<string, IDiffStat>
+  ) {
     const element = document.createElement(node.type);
     const { id, name, onClick, fullName } = node.props;
 
@@ -201,7 +222,13 @@ export default class ChangedFiles {
 
       const diffStatElement =
         diffStats && this.renderDiffStat(diffStats[fullName]);
-      span.classList.add('file-name');
+      const isFileDeleted = deletedInfo[fullName].isDeleted;
+
+      span.className = 'file-name';
+
+      if (isFileDeleted) {
+        span.classList.add('deleted');
+      }
 
       const appendingElements = diffStatElement
         ? [icon, span, diffStatElement]
@@ -211,7 +238,7 @@ export default class ChangedFiles {
     }
 
     node.children
-      ?.map(child => this.createElement(child, diffStats))
+      ?.map(child => this.createElement(child, deletedInfo, diffStats))
       .forEach(elem => {
         element.lastElementChild.appendChild(elem);
       });
@@ -233,10 +260,11 @@ export default class ChangedFiles {
 
     const virtualDOM = this.createVirtualDOM(this.root, '');
     const elements = [];
+    const deletedInfo = this.getDeletedInfoOfFiles(fileSrcs);
     const diffStats = this.getDiffStats(fileSrcs);
 
     virtualDOM.forEach(node => {
-      const element = this.createElement(node, diffStats);
+      const element = this.createElement(node, deletedInfo, diffStats);
       elements.push(element);
     });
 
