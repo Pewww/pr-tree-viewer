@@ -72,6 +72,10 @@
   margin-right: 8px;
 }
 
+#pr-tree-viewer-root #pr-changed-files .file-name.deleted {
+  text-decoration: line-through;
+}
+
 #pr-tree-viewer-root #pr-changed-files #diff-stat {
   display: inline-block;
   vertical-align: middle;
