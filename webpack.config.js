@@ -4,8 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: './src/index.ts',
-    background: './src/background.ts'
+    index: './src/index.ts'
   },
   output: {
     filename: '[name].js',
