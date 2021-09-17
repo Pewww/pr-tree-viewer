@@ -2,6 +2,8 @@
 The PR's 'Changed Files' show the contents of the changed files only in the form of a list, so it's difficult to understand the overall structure.<br>
 This extension provides the ability to view changed files in a tree structure, opens and closes all of the files to help you check them more conveniently.
 
+***Tips**: You can adjust the size with the resize button on the bottom right!*
+
 ### Download
 **Site**: [https://chrome.google.com/webstore/detail/pr-tree-viewer](https://chrome.google.com/webstore/detail/pr-tree-viewer/oohjmbbehcipaomlpikccfgncaknhenp?hl=ko)
 
