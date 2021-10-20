@@ -9,7 +9,9 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.join(__dirname + '/dist')
+    path: path.join(__dirname + '/dist'),
+    // Reference: https://stackoverflow.com/questions/64294706/webpack5-automatic-publicpath-is-not-supported-in-this-browser?rq=1
+    publicPath: ''
   },
   resolve: {
     extensions: [
