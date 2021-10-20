@@ -24,7 +24,7 @@
   min-height: 200px;
   max-height: calc(100vh - 190px);
   background-color: transparent;
-  border: 1px solid #e1e4e8;
+  border: 1px solid var(--color-border-default, #ddd);
   border-radius: 6px;
   box-sizing: border-box;
   padding: 15px;
@@ -58,7 +58,7 @@
 
 #pr-tree-viewer-root button {
   border: 0;
-  border: 1px solid #e1e4e8;
+  border: 1px solid var(--color-border-default, #ddd);
   border-radius: 6px;
   background-color: transparent;
 }
@@ -95,18 +95,20 @@
   width: 7px;
   height: 7px;
   margin-left: 1px;
+  outline: 1px solid var(--color-border-subtle);
+  outline-offset: -1px;
 }
 
 #pr-tree-viewer-root #pr-changed-files #diff-stat .added {
-  background-color: #28a745;
+  background-color: var(--color-diffstat-addition-bg);
 }
 
 #pr-tree-viewer-root #pr-changed-files #diff-stat .deleted {
-  background-color: #d73a49;
+  background-color: var(--color-danger-emphasis);
 }
 
 #pr-tree-viewer-root #pr-changed-files #diff-stat .neutral {
-  background-color: #d1d5da;
+  background-color: var(--color-neutral-muted);
 }
 
 #pr-tree-viewer-root .remove-btn {
@@ -153,13 +155,13 @@
   padding-left: 4px;
   font-weight: 600;
   font-size: 14px;
-  color: #353535;
+  color: var(--color-fg-default);
 }
 
 #pr-tree-viewer-root #diff-stat-show-setting .seperate-line {
   width: 100%;
   height: 1px;
-  background-color: #e1e4e8;
+  background-color: var(--color-border-default, #ddd);
   margin-top: 12px;
 }
 
@@ -170,43 +172,11 @@
 }
 
 /* ----- PR-Tree-Viewer CSS in Github Dark Mode ----- */
-#pr-tree-viewer-root.dark-mode {
-  border-color: #30363d;
-}
-
-#pr-tree-viewer-root.dark-mode button {
-  border-color: #30363d;
-}
-
 #pr-tree-viewer-root.dark-mode #viewed-btns-wrapper button {
   color: #58a6ff;
 }
 
-#pr-tree-viewer-root.dark-mode #diff-stat-show-setting .seperate-line {
-  background-color: #30363d;
-}
-
-#pr-tree-viewer-root.dark-mode #diff-stat-show-setting span {
-  color: #c9d1d9;
-}
-
 /* ----- PR-Tree-Viewer CSS in Github Dark Dimmed Mode ----- */
-#pr-tree-viewer-root.dark-dimmed-mode {
-  border-color: #444c56;
-}
-
-#pr-tree-viewer-root.dark-dimmed-mode button {
-  border-color: #444c56;
-}
-
 #pr-tree-viewer-root.dark-dimmed-mode #viewed-btns-wrapper button {
   color: #539bf5;
-}
-
-#pr-tree-viewer-root.dark-dimmed-mode #diff-stat-show-setting .seperate-line {
-  background-color: #444c56;
-}
-
-#pr-tree-viewer-root.dark-dimmed-mode #diff-stat-show-setting span {
-  color: #adbac7;
 }
