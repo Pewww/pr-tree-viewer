@@ -33,12 +33,12 @@ export default class PrTreeViewer {
 
   private get filesElement() {
     // PR 파일들을 감싸는 Wrapper 엘리먼트(스타일 수정용)
-    return document.querySelector('#files_bucket > #files') as HTMLElement;
+    return document.querySelector('#files_bucket #files') as HTMLElement;
   }
 
   private get commitElement() {
     // 커밋 로그 접속 시의 엘리먼트(스타일 수정용)
-    return document.querySelector('#files_bucket > .commit') as HTMLElement;
+    return document.querySelector('#files_bucket .commit') as HTMLElement;
   }
 
   private get filesBucketElement() {
