@@ -1,4 +1,4 @@
-import { GITHUB_FILES_URL_EXP } from './lib/regex';
+import { GITHUB_FILES_URL_EXP } from './constants/regex';
 
 chrome.tabs.onUpdated.addListener((
   tabId: number,
