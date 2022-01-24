@@ -2,12 +2,12 @@
 @import '~file-icons-js/css/style.css';
 
 /* ----- Github Page CSS ----- */
-.js-suggested-changes-files-tab > #files_bucket > #files,
-.js-suggested-changes-files-tab > #files_bucket > .commit {
+.js-suggested-changes-files-tab #files_bucket #files,
+.js-suggested-changes-files-tab #files_bucket .commit {
   margin-left: 375px;
 }
 
-#files_bucket > .pr-toolbar.is-stuck #pr-tree-viewer-root {
+#files_bucket .pr-toolbar.is-stuck #pr-tree-viewer-root {
   top: 70px;
 }
 
