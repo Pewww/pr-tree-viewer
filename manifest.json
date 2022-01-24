@@ -1,6 +1,6 @@
 {
   "name": "pr-tree-viewer",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "manifest_version": 2,
   "description": "PR의 변경된 파일들을 트리 구조로 볼 수 있도록 도와주는 크롬 익스텐션",
   "permissions": [
