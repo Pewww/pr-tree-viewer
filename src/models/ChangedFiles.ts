@@ -39,7 +39,7 @@ export default class ChangedFiles {
 
   private getFileSrcs() {
     const fileSrcTags = Array.from(
-      document.querySelectorAll(`.${this.rootClassName} > .diffstat + a`)
+      document.querySelectorAll(`.${this.rootClassName} > .Truncate > a`)
     );
 
     return fileSrcTags.map(({ title }: HTMLElement) =>
@@ -116,7 +116,7 @@ export default class ChangedFiles {
 
   private scrollToDestination(fullName: string) {
     const fileSrcTags = Array.from(
-      document.querySelectorAll(`.${this.rootClassName} > .diffstat + a`)
+      document.querySelectorAll(`.${this.rootClassName} > .Truncate > a`)
     ) as HTMLAnchorElement[];
     const targetIdx = fileSrcTags.findIndex(({ title }) =>
       title.endsWith(fullName)
