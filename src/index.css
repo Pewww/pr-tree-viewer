@@ -11,10 +11,6 @@
   top: 70px;
 }
 
-.Layout-sidebar {
-  display: none;
-}
-
 /* ----- PR-Tree-Viewer CSS ----- */
 #pr-tree-viewer-root {
   position: absolute;
