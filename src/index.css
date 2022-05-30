@@ -11,6 +11,10 @@
   top: 70px;
 }
 
+div[side="left"][data-target="diff-layout.layoutContainer"] > div[data-target="diff-layout.sidebarContainer"] {
+  display: none;
+}
+
 /* ----- PR-Tree-Viewer CSS ----- */
 #pr-tree-viewer-root {
   position: absolute;
