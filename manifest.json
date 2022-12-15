@@ -16,7 +16,7 @@
     {
       "run_at": "document_idle",
       "matches": [
-        "*://github.com/*"
+        "*://oss.navercorp.com/*"
       ],
       "js": [
         "index.js"

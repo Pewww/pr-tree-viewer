@@ -39,7 +39,7 @@ export default class ChangedFiles {
 
   private getFileSrcs() {
     const fileSrcTags = Array.from(
-      document.querySelectorAll(`.${this.rootClassName} > .Truncate > a`)
+      document.querySelectorAll(`.${this.rootClassName} > a`)
     );
 
     return fileSrcTags.map(({ title }: HTMLElement) =>
